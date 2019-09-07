@@ -1,26 +1,38 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import LoginContainer from './containers/LoginContainer'
+import ProfileContainer from './containers/ProfileContainer'
+import StockShowContainer from './containers/StockShowContainer'
+import { Component } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      current_user: undefined,
+      selected_stock: undefined,    
+    }
+  }
+
+  render() {
+    return (
+      <div className="App">
+        {this.state.current_user ? 
+        <div>
+          {this.state.selected_stock?  
+            <StockShowContainer /> 
+          :
+            <ProfileContainer />
+          }
+        </div>
+          :
+        <LoginContainer />
+      }
+
+      </div>
+    );
+  }
 }
 
 export default App;
