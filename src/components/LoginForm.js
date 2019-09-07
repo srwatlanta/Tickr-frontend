@@ -1,8 +1,34 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
+import { Button } from '@material-ui/core';
 
+const styles = {
+    bar: {
+        backgroundColor: '#ba68c8',
+        color: 'white'
+    }
+}
 
 class LoginForm extends Component {
+    constructor(){
+        super()
+        this.state = {
+            username: '',
+            password: ''
+        }
+    }
+
+    handleChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
+
+    handleSubmit = (event) => {
+        event.preventDefault()
+        this.props.handleSubmit(this.state)
+    }
+
     render() {
         return (
             <div>
@@ -16,6 +42,7 @@ class LoginForm extends Component {
                         autoComplete="username"
                         margin="normal"
                         variant="outlined"
+                        onChange={this.handleChange}
                     />
                     </div>
                     <div>
@@ -27,9 +54,17 @@ class LoginForm extends Component {
                         autoComplete="password"
                         margin="normal"
                         variant="outlined"
+                        onChange={this.handleChange}
                     />
                     </div>
-
+                    <div>
+                    <Button 
+                        variant="outlined" 
+                        style={styles.bar}
+                        onClick={event => this.handleSubmit(event)}>
+                        Login
+                    </Button>
+                    </div>
                 </form>  
             </div>
         );

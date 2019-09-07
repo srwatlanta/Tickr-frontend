@@ -1,6 +1,6 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import NavBar from './components/NavBar'
 import LoginContainer from './containers/LoginContainer'
 import ProfileContainer from './containers/ProfileContainer'
 import StockShowContainer from './containers/StockShowContainer'
@@ -11,13 +11,26 @@ class App extends Component {
     super()
     this.state = {
       current_user: undefined,
-      selected_stock: undefined,    
+      selected_stock: undefined,
+      token: undefined,
+      login_form: {
+        username: '',
+        password: ''
+      }
     }
   }
 
+  handleLoginSubmit = (formInfo) => {
+    this.setState({
+      login_form: formInfo
+    })
+  }
+
   render() {
+    console.log(this.state)
     return (
       <div className="App">
+        <NavBar />
         {this.state.current_user ? 
         <div>
           {this.state.selected_stock?  
@@ -27,7 +40,7 @@ class App extends Component {
           }
         </div>
           :
-        <LoginContainer />
+        <LoginContainer handleSubmit={this.handleLoginSubmit}/>
       }
 
       </div>

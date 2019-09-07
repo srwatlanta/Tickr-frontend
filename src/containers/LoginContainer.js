@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import LoginForm from '../components/LoginForm'
-import NavBar from '../components/NavBar'
 import { Container } from '@material-ui/core';
+
 
 
 class LoginContainer extends Component {
@@ -9,8 +9,7 @@ class LoginContainer extends Component {
         return (
             <div>
                 <Container maxWidth="xl">
-                    <NavBar />
-                    <LoginForm />
+                    <LoginForm handleSubmit={this.props.handleSubmit}/>
                 </Container> 
             </div>
         );
