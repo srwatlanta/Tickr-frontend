@@ -6,8 +6,9 @@ import GraphChart from '../components/GraphChart'
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-
-
+import SectorPieChart from '../components/PieChart';
+import Grid from '@material-ui/core/Grid';
+import StockCard from '../components/StockCard'
 
   
 class StockShowContainer extends Component {
@@ -16,7 +17,19 @@ class StockShowContainer extends Component {
     render() {
         return (
             <div>
-                <GraphChart />
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <Grid container justify="center">
+                            <GraphChart />
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={10}>
+                        <Grid container justify="flex-end">
+                            <StockCard />
+                            <SectorPieChart />
+                        </Grid>
+                    </Grid>
+                </Grid>
             </div>
         );
     }

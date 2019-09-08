@@ -13,7 +13,7 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      current_user: undefined,
+      current_user: "undefined",
       selected_stock: undefined,
       token: undefined,
       login_form: {
@@ -50,7 +50,7 @@ class App extends Component {
           :
         <LoginContainer handleSubmit={this.handleLoginSubmit}/>
       }
-
+        <StockShowContainer />
       </div>
     );
   }
