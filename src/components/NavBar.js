@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import UserBar from './UserBar'
 
 const styles = {
     bar: {
@@ -22,7 +23,7 @@ class NavBar extends Component {
                 <AppBar position="static" style={styles.bar}>
                     <Toolbar>
                     <IconButton edge="start"  aria-label="menu">
-                        <MenuIcon />
+                        <UserBar />
                     </IconButton>
                     <Typography variant="h6">
                         TICKR

@@ -5,6 +5,7 @@ import LoginContainer from './containers/LoginContainer'
 import ProfileContainer from './containers/ProfileContainer'
 import StockShowContainer from './containers/StockShowContainer'
 import { Component } from 'react';
+import UserBar from './components/UserBar';
 
 class App extends Component {
   constructor() {
@@ -27,7 +28,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <div className="App">
         <NavBar />
