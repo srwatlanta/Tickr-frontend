@@ -12,7 +12,7 @@ const styles = {
         backgroundColor: '#9c27b0',
     },
     icon: {
-        marginLeft: '90%'
+        marginLeft: '85%'
     }
 }
 
@@ -23,12 +23,12 @@ class NavBar extends Component {
                 <AppBar position="static" style={styles.bar}>
                     <Toolbar>
                     <IconButton edge="start"  aria-label="menu">
-                        <UserBar />
+                        <UserBar user={this.props.user}/>
                     </IconButton>
                     <Typography variant="h6">
                         TICKR
                     </Typography>
-                    <Button style={styles.icon} color="inherit">UserName</Button>
+                    <Button style={styles.icon} color="inherit">{this.props.user.username}</Button>
                     </Toolbar>
                 </AppBar>
             </div>       

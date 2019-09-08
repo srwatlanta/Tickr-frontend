@@ -7,6 +7,8 @@ import StockShowContainer from './containers/StockShowContainer'
 import { Component } from 'react';
 import UserBar from './components/UserBar';
 
+const UserUrl = 'http://localhost:3000/profile'
+
 class App extends Component {
   constructor() {
     super()
@@ -27,12 +29,18 @@ class App extends Component {
     })
   }
 
+  componentDidMount(){
+    fetch(UserUrl)
+    .then(res => res.json())
+    .then(data => this.setState({current_user: data.user}))
+  }
+
   render() {
     return (
       <div className="App">
-        <NavBar />
         {this.state.current_user ? 
         <div>
+        <NavBar user={this.state.current_user}/>
           {this.state.selected_stock?  
             <StockShowContainer /> 
           :

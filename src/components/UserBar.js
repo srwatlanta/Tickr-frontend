@@ -34,7 +34,8 @@ const useStyles = makeStyles({
   },
 });
 
-export default function UserBar() {
+export default function UserBar(props) {
+  const user = props.user
   const classes = useStyles();
   const [state, setState] = React.useState({
     open: false,
@@ -52,19 +53,20 @@ export default function UserBar() {
     >
       <List>
         <ListItem image>
-            <Avatar alt="Remy Sharp" src="https://images-na.ssl-images-amazon.com/images/I/41dM6tFDFUL.jpg" className={classes.bigAvatar} />
+            <Avatar alt="Remy Sharp" src={user.image_url} className={classes.bigAvatar} />
         </ListItem>
         <ListItem>
             <ListItemIcon><PersonIcon/></ListItemIcon>
-            <ListItemText primary='John Jeffries' />
+            <ListItemText primary={user.name} />
         </ListItem>
         <ListItem>
             <ListItemIcon><EmailIcon/></ListItemIcon>
-            <ListItemText primary='jj@gmail.com' />
+            <ListItemText primary={user.email} />
         </ListItem>
         <ListItem>
             <ListItemIcon><CalendarTodayIcon/></ListItemIcon>
-            <ListItemText primary='Member Since: 2015' />
+            <ListItemText primary="Member Since:" />
+            <ListItemText primary={user.member_since} />
         </ListItem>
       </List>
       <Divider/>
