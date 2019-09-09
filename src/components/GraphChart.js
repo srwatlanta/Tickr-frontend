@@ -6,9 +6,13 @@ import Typography from '@material-ui/core/Typography';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   } from 'recharts';
+
+
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3, 2),
+    maxWidth: 1000,
+    backgroundColor: "#fff3e0",
   },
 }));
 
@@ -58,7 +62,7 @@ const GraphChart = () => {
         <Typography component="p">
           Sector: Technology
         </Typography>
-        <LineChart width={730} height={250} data={data}
+        <LineChart width={730} height={400} data={data}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
-
+import { NavLink } from 'react-router-dom';
 const styles = {
     bar: {
         backgroundColor: '#ba68c8',
@@ -30,6 +30,7 @@ class LoginForm extends Component {
     }
 
     render() {
+        
         return (
             <div>
                 <form>
@@ -58,12 +59,17 @@ class LoginForm extends Component {
                     />
                     </div>
                     <div>
-                    <Button 
-                        variant="outlined" 
-                        style={styles.bar}
-                        onClick={event => this.handleSubmit(event)}>
-                        Login
-                    </Button>
+                
+                        <Button 
+                            variant="outlined" 
+                            style={styles.bar}
+                            onClick={event => this.handleSubmit(event)}>
+                            <NavLink to="/profile" exact>
+                                Login
+                            </NavLink>
+                            
+                        </Button>
+                    
                     </div>
                 </form>  
             </div>

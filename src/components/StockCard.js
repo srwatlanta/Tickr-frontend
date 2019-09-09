@@ -5,7 +5,9 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
+import AddIcon from '@material-ui/icons/Add';
+import Tooltip from '@material-ui/core/Tooltip';
+import Fab from '@material-ui/core/Fab';
 //Recharts 
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
 
@@ -60,6 +62,11 @@ const StockCard = () => {
                     <Button size="small" color="primary">
                     Remove
                     </Button>
+                    <Tooltip title="Add" aria-label="add">
+                        <Fab color="primary" className={classes.fab}>
+                        <AddIcon />
+                        </Fab>
+                    </Tooltip>
                     <Button size="small" color="primary">
                     Learn More
                     </Button>
