@@ -17,6 +17,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 
 
+
 const useStyles = makeStyles({
   list: {
     width: 250,
@@ -74,6 +75,10 @@ export default function UserBar(props) {
         < ListItem button>
             <ListItemIcon><ShowChartIcon/></ListItemIcon>
             <ListItemText primary='Profile' />
+        </ListItem>   
+        <ListItem button onClick={props.logOut}>
+            <ListItemIcon><ShowChartIcon/></ListItemIcon>
+            <ListItemText primary='Sign Out' />
         </ListItem>      
       </List>
 

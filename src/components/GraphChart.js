@@ -16,61 +16,32 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const data = [
-    {"name": "9/1",
-     "pv": 210
-    },
-    {"name": "9/2",
-     "pv": 215
-    },
-    {"name": "9/3",
-     "pv": 220
-    },
-    {"name": "9/4",
-     "pv": 190
-    },
-    {"name": "9/5",
-     "pv": 160
-    },
-    {"name": "9/6",
-     "pv": 140
-    },
-    {"name": "9/7",
-     "pv": 175
-    },
-    {"name": "9/8",
-     "pv": 190
-    },
-    {"name": "9/9",
-     "pv": 210
-    },
-    {"name": "9/10",
-    "pv": 185
-    }
-]
 
 
-const GraphChart = () => {
+let ticker
+
+const GraphChart = (props) => {
   const classes = useStyles();
-
+  ticker = props.stockInfo
+  console.log(props)
   return (
     <div>
-      <Paper className={classes.root}>
+      <Paper classdate={classes.root}>
         <Typography variant="h5" component="h3">
-          AAPL
+          {props.stockName}
         </Typography>
         <Typography component="p">
           Sector: Technology
         </Typography>
-        <LineChart width={730} height={400} data={data}
+        <LineChart width={730} height={400} data={props.stockInfo}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
+            <XAxis dataKey="date" />
             <YAxis />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey="pv" stroke="#8884d8" />
-            <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+            <Line type="monotone" dataKey={props.stockName} stroke="#8884d8" />
+            
         </LineChart>
       </Paper>
     </div>
