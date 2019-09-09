@@ -6,6 +6,7 @@ import ProfileContainer from './containers/ProfileContainer'
 import StockShowContainer from './containers/StockShowContainer'
 import { Component } from 'react';
 import UserBar from './components/UserBar';
+import StockCard from './components/StockCard'
 
 const UserUrl = 'http://localhost:3000/profile'
 
@@ -44,7 +45,10 @@ class App extends Component {
           {this.state.selected_stock?  
             <StockShowContainer /> 
           :
+          <div>
             <ProfileContainer />
+            <StockCard />
+          </div>
           }
         </div>
           :
