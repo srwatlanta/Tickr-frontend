@@ -15,8 +15,9 @@ const styles = {
         backgroundColor: '#fb8c00',
     },
     button: {
-        marginLeft: "10%",
-        marginTop: "5%"
+        marginLeft: "7%",
+        marginTop: "4%",
+        backgroundColor: "#bdbdbd"
     }
 }
 
@@ -30,7 +31,7 @@ class NavBar extends Component {
 
     handleChange = (event) => {
         this.setState({
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value.toUpperCase()
         })
     }
 
@@ -41,47 +42,39 @@ class NavBar extends Component {
 
     render() {
         return (
-
             <Grid container >
                 <AppBar position="static" style={styles.bar}>
                     <Toolbar>
-                    <Grid item xs={10}>
-                    <IconButton edge="start"  aria-label="menu">
-                        {this.props.user &&
-                        <UserBar user={this.props.user} logOut={this.props.logOut}/> 
-                        }
+                        <Grid item xs={9}>
+                            <IconButton edge="start"  aria-label="menu">
+                                {this.props.user &&
+                                <UserBar user={this.props.user} logOut={this.props.logOut}/> 
+                                }    
+                            </IconButton>
                         
-                    </IconButton>
-                    <Typography variant="h6">
-                        TICKR
-                    </Typography>
-                    </Grid>
-                    <Grid item xs={2}>
-                    <div>
-                        <form>
-                            
-                            <TextField
-                                id="outlined-email-input"
-                                label="search"
-                                type="search"
-                                name="search"
-                                autoComplete="search"
-                                margin="normal"
-                                variant="outlined"
-                                onChange={this.handleChange}/
-                            >
-                            {/* <Button 
-                            onClick={this.handleSearch}
-                            variant="outlined" 
-                            >
-                            Find Stock</Button> */}
-                            <Fab color="#bdbdbd" aria-label="add" onClick={this.handleSearch} style={styles.button}>
-                                <SearchTwoToneIcon />
-                            </Fab>
-                        </form>
-                        
-                    </div>
-                    </Grid>
+                            <Typography variant="h6">
+                                TICKR
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <div>
+                                <form>   
+                                    <TextField
+                                        id="outlined-email-input"
+                                        label="search"
+                                        type="search"
+                                        name="search"
+                                        autoComplete="search"
+                                        margin="normal"
+                                        variant="outlined"
+                                        onChange={this.handleChange}/
+                                    >
+                                    <Fab aria-label="add" onClick={this.handleSearch} style={styles.button}>
+                                        <SearchTwoToneIcon />
+                                    </Fab>
+                                </form>
+                            </div>
+                        </Grid>
                     </Toolbar>
                 </AppBar>
             </Grid>       

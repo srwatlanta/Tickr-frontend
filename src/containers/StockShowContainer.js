@@ -9,14 +9,25 @@ import Typography from '@material-ui/core/Typography';
 import SectorPieChart from '../components/PieChart';
 import Grid from '@material-ui/core/Grid';
 import StockCard from '../components/StockCard'
+import Fab from '@material-ui/core/Fab'
+import AddIcon from '@material-ui/icons/Add'
+
 
   
-const styles = {bar: {
-    backgroundColor: '#eee',
-},
-icon: {
-    marginLeft: '85%'
-}}
+const styles = {
+    bar: {
+        backgroundColor: '#eee',
+        },
+    icon: {
+        marginLeft: '85%'
+        },
+    button: {
+        position: 'absolute',
+        bottom: '5%',
+        right: '5%',
+        backgroundColor: '#fb8c00'
+    }  
+}
 
 class StockShowContainer extends Component {
     
@@ -28,6 +39,9 @@ class StockShowContainer extends Component {
                     <Grid item xs={12}>
                         <Grid container justify="center">
                             <GraphChart stockInfo={this.props.stockInfo} stockName={this.props.stockName}/>
+                            <Fab color="#fb8c00" aria-label="add" onClick={this.handleSearch} style={styles.button}>
+                                <AddIcon />
+                            </Fab>
                         </Grid>
                     </Grid>
                     <Grid item xs={10}>
