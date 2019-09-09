@@ -6,52 +6,66 @@ import ProfileContainer from './containers/ProfileContainer'
 import StockShowContainer from './containers/StockShowContainer'
 import { Component } from 'react';
 import UserBar from './components/UserBar';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-const UserUrl = 'http://localhost:3000/profile'
+
+const UserUrl = 'http://localhost:3000/'
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      current_user: "undefined",
+      current_user: undefined,
       selected_stock: undefined,
       token: undefined,
-      login_form: {
-        username: '',
-        password: ''
-      }
     }
   }
 
-  handleLoginSubmit = (formInfo) => {
-    this.setState({
-      login_form: formInfo
+  handleLoginSubmit = (data) => {
+    fetch("http://localhost:3000/", {
+      method:"POST",
+      headers: {
+        "Content-Type": "application/json",
+        'Accepts': 'application/json'
+      }, 
+      body: JSON.stringify({
+        login_form: data
+      })
     })
+    .then(res => res.json())
+    .then(user => this.setState({token: user.jwt}, ()=> {this.fetchProfile()}))
+    
   }
 
-  componentDidMount(){
-    fetch(UserUrl)
+  fetchProfile = () => {
+    fetch("http://localhost:3000/profile", {
+      method: "GET",
+      headers: {
+        Authorization :`Bearer ${this.state.token}`
+      }
+    })
     .then(res => res.json())
     .then(data => this.setState({current_user: data.user}))
   }
 
+
   render() {
     return (
-      <div className="App">
-        {this.state.current_user ? 
-        <div>
+      <Router >
         <NavBar user={this.state.current_user}/>
-          {this.state.selected_stock?  
-            <StockShowContainer /> 
-          :
-            <ProfileContainer />
-          }
-        </div>
-          :
-        <LoginContainer handleSubmit={this.handleLoginSubmit}/>
-      }
-        <StockShowContainer />
-      </div>
+          {this.state.current_user ? 
+          <div>
+            {this.state.selected_stock?  
+            <Route exact path={`/stocks/${this.state.selected_stock}`} component={() => <StockShowContainer /> } />
+            :
+            <Route exact path="/profile" component={()=> <ProfileContainer user={this.state.current_user}/> } />
+            }
+          </div>
+            :
+          <Route exact path="/" component={()=> <LoginContainer handleSubmit={this.handleLoginSubmit}/>}/>
+        }
+        
+      </Router>
     );
   }
 }

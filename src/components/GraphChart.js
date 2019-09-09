@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3, 2),
     maxWidth: 1000,
-    backgroundColor: "grey",
+    backgroundColor: "#fff3e0",
   },
 }));
 

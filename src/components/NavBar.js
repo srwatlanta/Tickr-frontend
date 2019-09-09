@@ -9,7 +9,7 @@ import UserBar from './UserBar'
 
 const styles = {
     bar: {
-        backgroundColor: '#9c27b0',
+        backgroundColor: '#fb8c00',
     },
     icon: {
         marginLeft: '85%'
@@ -23,12 +23,16 @@ class NavBar extends Component {
                 <AppBar position="static" style={styles.bar}>
                     <Toolbar>
                     <IconButton edge="start"  aria-label="menu">
-                        <UserBar user={this.props.user}/>
+                        {this.props.user ? 
+                        <UserBar user={this.props.user}/> 
+                        : 
+                        null}
+                        
                     </IconButton>
                     <Typography variant="h6">
                         TICKR
                     </Typography>
-                    <Button style={styles.icon} color="inherit">{this.props.user.username}</Button>
+                    {/* <Button style={styles.icon} color="inherit">{this.props.user.username}</Button> */}
                     </Toolbar>
                 </AppBar>
             </div>       

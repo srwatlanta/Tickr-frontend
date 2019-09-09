@@ -11,12 +11,19 @@ import Grid from '@material-ui/core/Grid';
 import StockCard from '../components/StockCard'
 
   
+const styles = {bar: {
+    backgroundColor: '#eee',
+},
+icon: {
+    marginLeft: '85%'
+}}
+
 class StockShowContainer extends Component {
     
 
     render() {
         return (
-            <div>
+            <div style={styles.bar}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Grid container justify="center">
