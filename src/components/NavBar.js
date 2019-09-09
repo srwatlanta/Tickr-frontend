@@ -8,14 +8,15 @@ import { MenuIcon } from '@material-ui/icons';
 import UserBar from './UserBar'
 import { TextField, Fab } from '@material-ui/core'
 import SearchTwoToneIcon from '@material-ui/icons/SearchTwoTone'
-
+import Grid from '@material-ui/core/Grid'
 
 const styles = {
     bar: {
         backgroundColor: '#fb8c00',
     },
-    icon: {
-        marginLeft: '85%'
+    button: {
+        marginLeft: "10%",
+        marginTop: "5%"
     }
 }
 
@@ -40,9 +41,11 @@ class NavBar extends Component {
 
     render() {
         return (
-            <div >
+
+            <Grid container >
                 <AppBar position="static" style={styles.bar}>
                     <Toolbar>
+                    <Grid item xs={10}>
                     <IconButton edge="start"  aria-label="menu">
                         {this.props.user &&
                         <UserBar user={this.props.user} logOut={this.props.logOut}/> 
@@ -52,7 +55,9 @@ class NavBar extends Component {
                     <Typography variant="h6">
                         TICKR
                     </Typography>
-                    <div style={styles.icon}>
+                    </Grid>
+                    <Grid item xs={2}>
+                    <div>
                         <form>
                             
                             <TextField
@@ -70,15 +75,16 @@ class NavBar extends Component {
                             variant="outlined" 
                             >
                             Find Stock</Button> */}
-                            <Fab color="#bdbdbd" aria-label="add" onClick={this.handleSearch}>
+                            <Fab color="#bdbdbd" aria-label="add" onClick={this.handleSearch} style={styles.button}>
                                 <SearchTwoToneIcon />
                             </Fab>
                         </form>
                         
                     </div>
+                    </Grid>
                     </Toolbar>
                 </AppBar>
-            </div>       
+            </Grid>       
         );
     }
 }

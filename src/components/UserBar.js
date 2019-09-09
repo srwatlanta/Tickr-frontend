@@ -13,7 +13,7 @@ import EmailIcon from '@material-ui/icons/Email';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
 import MenuIcon from '@material-ui/icons/Menu';
-
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 
 
@@ -77,7 +77,7 @@ export default function UserBar(props) {
             <ListItemText primary='Profile' />
         </ListItem>   
         <ListItem button onClick={props.logOut}>
-            <ListItemIcon><ShowChartIcon/></ListItemIcon>
+            <ListItemIcon><ExitToAppIcon/></ListItemIcon>
             <ListItemText primary='Sign Out' />
         </ListItem>      
       </List>
