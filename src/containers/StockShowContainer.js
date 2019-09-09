@@ -27,13 +27,12 @@ class StockShowContainer extends Component {
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Grid container justify="center">
-                            <GraphChart />
+                            <GraphChart stockInfo={this.props.stockInfo} stockName={this.props.stockName}/>
                         </Grid>
                     </Grid>
                     <Grid item xs={10}>
                         <Grid container justify="flex-end">
-                            <StockCard />
-                            <SectorPieChart />
+                            
                         </Grid>
                     </Grid>
                 </Grid>
