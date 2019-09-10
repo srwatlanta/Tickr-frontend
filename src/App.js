@@ -18,10 +18,16 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      current_user: null,
-      selected_stock: null,
-      selected_stock_info: null,
-      user_stocks: []
+      currentUser: null,
+      currentPortfolio: 2,
+      portfolioStocks: [],
+      selectedStock: {
+        ticker: null,
+        todayPrice: null,
+        yesterdayPrice: null,
+        news: []
+      },
+      selectedStockInfo: null,
     }
   }
 
@@ -37,11 +43,10 @@ class App extends Component {
       })
     })
     .then(res => res.json())
-    .then(user => this.setState({current_user: user.user}, localStorage.setItem("token", user.jwt)))
+    .then(user => this.setState({currentUser: user.user}, localStorage.setItem("token", user.jwt)))
   }
 
   fetchProfile = () => {
-
     fetch("http://localhost:3000/profile", {
       method: "GET",
       headers: {
@@ -49,21 +54,51 @@ class App extends Component {
       }
     })
     .then(res => res.json())
-    .then(data => this.setState({current_user: data.user}))
-  }
+    .then(data => this.setState({currentUser: data.user},
+      () => this.state.currentUser ? this.filterStocks() : null
+      ))
+    }
 
   logOut = () => {
     localStorage.clear()
     this.setState({
-      current_user: null,
-      selected_stock: null
+      currentUser: null,
+      selectedStock: {
+        ticker: null,
+        todayPrice: null,
+        yesterdayPrice: null,
+        news: []
+      }
     })
-    
+  }
+
+  filterStocks = () => {
+    let filteredStocks = this.state.currentUser.stocks.filter(stock => {
+      return stock.portfolio_id === this.state.currentPortfolio
+    })
+    this.setState({
+      portfolioStocks: filteredStocks
+    })
   }
 
   componentDidMount(){
     this.fetchProfile()
   }
+
+  fetchShowInfo = (query) => {
+    this.fetchNewsData(query)
+    this.fetchSearchStockData(query)
+  }
+
+  fetchNewsData = (query) => {
+    fetch('https://newsapi.org/v2/everything?q=' + query + '&from=2019-08-10&sortBy=publishedAt&apiKey=' + newsAPIKEY)
+    .then(res => res.json())
+    .then(news => this.setState(prevState => ({
+      selectedStock: {...prevState.selectedStock, news: news.articles}
+    }))
+  )}
+
+
 
   //Fetch Stock Data
   fetchSearchStockData = (stock) => {
@@ -72,9 +107,20 @@ class App extends Component {
     .then(data => this.setSearchStockData(data))
   }
 
-  //Handle Stock Fetch
-  setSearchStockData = (data) => {
-  
+  setSelectedStockData = (data) => {
+    let prices = data["Time Series (Daily)"]
+    let price = Object.entries(prices).slice(0,2)
+    let price1 = Number(price[0][1]["4. close"])
+    let price2 = Number(price[1][1]["4. close"])
+    let objcopy = {...this.state.selectedStock}
+    objcopy.todayPrice = price1
+    objcopy.yesterdayPrice = price2
+    
+    this.setState({selectedStock: objcopy
+    })
+  }
+
+  setSelectedStockInfo = (data) => {
     let ticker = data["Meta Data"]['2. Symbol']
     let prices = data["Time Series (Daily)"]
     let tenEntries = Object.entries(prices).slice(0, 10)
@@ -84,36 +130,41 @@ class App extends Component {
                  [ticker]: Number(entry[1]["4. close"])}
       dataArr.unshift(obj)
     })
-    this.setState({selected_stock_info: dataArr}) 
+    this.setState({selectedStockInfo: dataArr}) 
+  }
+
+  //Handle Stock Fetch
+  setSearchStockData = (data) => {
+    this.setSelectedStockData(data)
+    this.setSelectedStockInfo(data)
   }
 
   handleSearch = (query) => {
-    this.setState({
-      selected_stock: query
-    })
-    this.fetchSearchStockData(query)
+    this.setState(prevState => ({
+      selectedStock: {...prevState.selectedStock, ticker: query}
+    }), this.fetchShowInfo(query)
+    )
   }
 
   render() {
-    console.log(this.state)
     return (
       <Router >
-        <NavBar user={this.state.current_user} logOut={this.logOut} handleSearch={this.handleSearch}/>
+        <NavBar user={this.state.currentUser} logOut={this.logOut} handleSearch={this.handleSearch}/>
           {localStorage.getItem("token") ?
           <React.Fragment>
-            {this.state.selected_stock ?  
-            <Redirect to={`/stocks/${this.state.selected_stock}`} />
+            {this.state.selectedStockInfo ?  
+            <Redirect to={`/stocks/${this.state.selectedStock.ticker}`} />
             :
             <Redirect to="/profile" />
             }
-          </React.Fragment>
+            </React.Fragment>
             :
             <Redirect to="/"/>
           }
 
-          <Route exact path="/" component={()=> <LoginContainer handleSubmit={this.handleLoginSubmit}/>}/>
-        <Route exact path={`/stocks/${this.state.selected_stock}`} component={() => <StockShowContainer stockInfo={this.state.selected_stock_info} stockName={this.state.selected_stock}/> } />
-        <Route exact path="/profile" component={()=> <ProfileContainer user={this.state.current_user} fetchProfile={this.fetchProfile} /> } /> 
+        <Route exact path="/" component={()=> <LoginContainer handleSubmit={this.handleLoginSubmit}/>}/>
+        <Route exact path="/profile" component={()=> <ProfileContainer user={this.state.currentUser} fetchProfile={this.fetchProfile} portfolioStocks={this.state.portfolioStocks}/> } /> 
+        <Route exact path={`/stocks/${this.state.selectedStock.ticker}`} component={() => <StockShowContainer stockInfo={this.state.selectedStockInfo} stock={this.state.selectedStock}/> } />
       </Router>
     );
   }

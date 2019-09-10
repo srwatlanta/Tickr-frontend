@@ -4,7 +4,7 @@ import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 const styles = {
     bar: {
-        backgroundColor: '#ba68c8',
+        backgroundColor: '#fb8c00',
         color: 'white'
     }
 }
