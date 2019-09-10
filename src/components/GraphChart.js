@@ -1,11 +1,14 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
+import Fab from '@material-ui/core/Fab'
+import AddIcon from '@material-ui/icons/Add'
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   } from 'recharts';
+import ProfileContainer from '../containers/ProfileContainer';
 
 
 const useStyles = makeStyles(theme => ({
@@ -16,19 +19,27 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const styles = {
+  button: {
+    backgroundColor: '#fb8c00',
+    marginLeft: '2%'
+  }
+}
 
-
-let ticker
 
 const GraphChart = (props) => {
   const classes = useStyles();
-  ticker = props.stockInfo
-  console.log(props)
   return (
     <div>
       <Paper classdate={classes.root}>
         <Typography variant="h5" component="h3">
-          {props.stockName}
+          {props.stock.ticker}
+          <Fab style={styles.button} aria-label="add" size="small">
+              <AddIcon />
+          </Fab>
+        </Typography>
+        <Typography variant="h5" component="h3">
+          {"$" + Number(props.stock.todayPrice)}
         </Typography>
         <Typography component="p">
           Sector: Technology
@@ -40,7 +51,7 @@ const GraphChart = (props) => {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey={props.stockName} stroke="#8884d8" />
+            <Line type="monotone" dataKey={props.stock.ticker} stroke="#8884d8" />
             
         </LineChart>
       </Paper>

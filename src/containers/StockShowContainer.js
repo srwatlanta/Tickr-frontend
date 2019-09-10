@@ -38,15 +38,12 @@ class StockShowContainer extends Component {
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Grid container justify="center">
-                            <GraphChart stockInfo={this.props.stockInfo} stockName={this.props.stockName}/>
-                            <Fab color="#fb8c00" aria-label="add" onClick={this.handleSearch} style={styles.button}>
-                                <AddIcon />
-                            </Fab>
+                            <GraphChart stockInfo={this.props.stockInfo} stock={this.props.stock}/>
                         </Grid>
                     </Grid>
-                    <Grid item xs={10}>
-                        <Grid container justify="flex-end">
-                            
+                    <Grid item xs={12}>
+                        <Grid container justify="center">
+                            <StockNews news={this.props.stock.news}/>
                         </Grid>
                     </Grid>
                 </Grid>
