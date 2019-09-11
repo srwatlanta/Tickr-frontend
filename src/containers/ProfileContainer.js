@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import UserDisplayContainer from './UserDisplayContainer'
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import PortfolioGraphChart from '../components/PortfolioGraphChart';
-import TextField from '@material-ui/core/TextField'
-import {Button} from '@material-ui/core'
 import StockCardContainer from './StockCardContainer'
+
 
 const styles = {
     bar: {
@@ -86,7 +84,13 @@ class ProfileContainer extends Component {
                     <Grid container justify='center'>
                         <Grid item>
                             <Paper>
-                                <PortfolioGraphChart stocks={this.state.stockGraphData} stockTickerData={this.state.stockCardData}/>
+                                {/* <PortfolioGraphChart 
+                                stocks={this.state.stockGraphData} 
+                                stockTickerData={this.state.stockCardData}
+                                portfolioId={this.props.portfolioId}
+                                // handlePortfolioChange={this.props.handlePortfolioChange}
+                                user={this.props.user}
+                                /> */}
                             </Paper>
                         </Grid>
                     </Grid>

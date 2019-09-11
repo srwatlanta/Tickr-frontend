@@ -31,26 +31,28 @@ const useStyles = makeStyles({
 
 
 const StockCard = (props) => {
-    console.log(props)
     const classes = useStyles();
     const capitalize = (s) => {
         if (typeof s !== 'string') return ''
         return s.charAt(0).toUpperCase() + s.slice(1)
       }    
+
+    const calculateChange = () => {
+      let change = props.stock.todayPrice - props.stock.yesterdayPrice
+      let percent = (props.stock.todayPrice / change)
+      return `${Number(change)} (${Number(percent)} %)` 
+    }
     return (
         <Card className={classes.card}>
             <CardContent>
                 <Typography className={classes.title} color="textPrimary" component="h1" >
                     {props.stock.ticker}
                 </Typography>
-                <Typography variant="h5" component="h2" color="textSecondary">
-                Sector: {capitalize(props.stock.sector)}
-                </Typography>
                 <Typography>
-                    $213.26
+                    {props.stock.todayPrice}
                 </Typography>
                 <Typography color="green">
-                    1.26 (1.2%)
+                    {calculateChange()}
                 </Typography>
 
                 <CardActions>

@@ -19,7 +19,7 @@ class App extends Component {
     super()
     this.state = {
       currentUser: null,
-      currentPortfolio: 2,
+      currentPortfolio: null,
       portfolioStocks: [],
       selectedStock: {
         ticker: null,
@@ -43,7 +43,10 @@ class App extends Component {
       })
     })
     .then(res => res.json())
-    .then(user => this.setState({currentUser: user.user}, localStorage.setItem("token", user.jwt)))
+    .then(data => {this.setState({
+      currentUser: data.user,
+      currentPortfolio: data.user.portfolios[0].id
+    },localStorage.setItem("token", data.jwt))})
   }
 
   fetchProfile = () => {
@@ -54,10 +57,12 @@ class App extends Component {
       }
     })
     .then(res => res.json())
-    .then(data => this.setState({currentUser: data.user},
-      () => this.state.currentUser ? this.filterStocks() : null
-      ))
-    }
+    .then(data => { this.setState({
+      currentUser: data.user, 
+      currentPortfolio: data.user.portfolios[0].id
+    }, () => this.state.currentUser ? this.filterStocks() : null
+      )})
+  } 
 
   logOut = () => {
     localStorage.clear()
@@ -82,7 +87,7 @@ class App extends Component {
   }
 
   componentDidMount(){
-    this.fetchProfile()
+    localStorage.getItem('token') && this.fetchProfile()
   }
 
   fetchShowInfo = (query) => {
@@ -91,7 +96,7 @@ class App extends Component {
   }
 
   fetchNewsData = (query) => {
-    fetch('https://newsapi.org/v2/everything?q=' + query + '&from=2019-08-10&sortBy=publishedAt&apiKey=' + newsAPIKEY)
+    fetch('https://newsapi.org/v2/everything?q=' + query + '&from=2019-09-11&sortBy=publishedAt&apiKey=' + newsAPIKEY)
     .then(res => res.json())
     .then(news => this.setState(prevState => ({
       selectedStock: {...prevState.selectedStock, news: news.articles}
@@ -146,6 +151,12 @@ class App extends Component {
     )
   }
 
+  // handlePortfolioChange = (id) => {
+  //   this.setState({
+  //     currentPortfolio: id
+  //   })
+  // }
+
   render() {
     return (
       <Router >
@@ -162,9 +173,21 @@ class App extends Component {
             <Redirect to="/"/>
           }
 
-        <Route exact path="/" component={()=> <LoginContainer handleSubmit={this.handleLoginSubmit}/>}/>
-        <Route exact path="/profile" component={()=> <ProfileContainer user={this.state.currentUser} fetchProfile={this.fetchProfile} portfolioStocks={this.state.portfolioStocks}/> } /> 
-        <Route exact path={`/stocks/${this.state.selectedStock.ticker}`} component={() => <StockShowContainer stockInfo={this.state.selectedStockInfo} stock={this.state.selectedStock}/> } />
+        <Route exact path="/" component={()=> 
+          <LoginContainer handleSubmit={this.handleLoginSubmit}/>}
+        />
+        <Route exact path="/profile" component={()=> 
+          <ProfileContainer 
+            user={this.state.currentUser} 
+            portfolioStocks={this.state.portfolioStocks} 
+            portfolioId={this.state.portfolioId} 
+            handlePortfolioChange={this.handlePortfolioChange}/>} 
+          />
+        <Route exact path={`/stocks/${this.state.selectedStock.ticker}`} component={() => 
+          <StockShowContainer 
+            stockInfo={this.state.selectedStockInfo} 
+            stock={this.state.selectedStock}/> } 
+          />
       </Router>
     );
   }

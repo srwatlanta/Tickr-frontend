@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   } from 'recharts';
+import SelectPortfolio from './SelectPortfolio';
 
 
 const useStyles = makeStyles(theme => ({
@@ -32,7 +33,6 @@ function getRandomColor() {
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
-    console.log(color)
   }
   
 
@@ -68,31 +68,35 @@ const formatStockInfoForGraph = (allStocks) => {
     let portStocks = []
     props.stocks.forEach(stockData => portStocks.push(stockData))
     let graphData = formatStockInfoForGraph(portStocks)
-
-  return (
-    <div>
-      <Paper classdate={classes.root}>
-        <Typography variant="h5" component="h3">
-          UserName
-        </Typography>
-        <Typography variant="h5" component="h3">
-            Portfolio Name
-        </Typography>
-        <Typography component="p">
-            
-        </Typography>
-        <LineChart width={730} height={400} data={graphData}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            {makeLines(props.stockTickerData)}
-        </LineChart>
-      </Paper>
-    </div>
-  );
-}
+    let username = props.user.username
+    return (
+      <div>
+        <Paper classdate={classes.root}>
+          <Typography variant="h5" component="h3">
+            {username}
+          </Typography>
+          <Typography variant="h5" component="h3">
+              <SelectPortfolio 
+                portfolioId={props.portfolioId}
+                handlePortfolioChange={props.handlePortfolioChange}
+                portfolios={props.user.portfolios}
+              />
+          </Typography>
+          <Typography component="p">
+              
+          </Typography>
+          <LineChart width={730} height={400} data={graphData}
+          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              {makeLines(props.stockTickerData)}
+          </LineChart>
+        </Paper>
+      </div>
+    );
+  }
 
 export default PortfolioGraphChart;
