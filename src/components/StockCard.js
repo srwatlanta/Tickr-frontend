@@ -43,7 +43,11 @@ const StockCard = (props) => {
       return change > 0 ? `+${change} (${percent}) %` : `${change} (${percent}) %`
     }
 
-    console.log(props)
+    const handleClick = (id) => {
+      props.deleteStockFetch(id)
+    }
+
+
     return (
         <Card className={classes.card}>
             <CardContent>
@@ -57,8 +61,8 @@ const StockCard = (props) => {
                     {calculateChange()}
                 </Typography>
 
-                <CardActions align="center">
-                    <Button onClick={() => props.deleteStockFetch(props.stock.id)} size="small" color="primary">
+                <CardActions>
+                    <Button onClick={() => handleClick(props.stock.id)} size="small" color="primary">
                     Remove
                     </Button>
                     <Button onClick={() => props.handleSearch(props.stock.ticker)} >

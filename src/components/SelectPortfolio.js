@@ -9,8 +9,8 @@ class SelectPortfolio extends Component {
     constructor(){
         super()
         this.state = {
-            portfolioName: null,
-            portfolioId: null
+            portfolioName: this.props.portfolioName,
+            portfolioId: this.props.portfolioId
         }
     }
     render() {

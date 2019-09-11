@@ -11,7 +11,6 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 const stockAPIKEY = '08G151DEIUICTJ2K'
 const newsAPIKEY = '85216af2d9e046409f238846c9947b25'
-// '5ad4e6f068cf44d88e8098b2925d04d2'
 
 
 class App extends Component {
@@ -159,24 +158,6 @@ class App extends Component {
     )
   }
 
-  updatePortfolioStocks = (id) => {
-    let newArray = this.state.portfolioStocks.filter(stock => {
-      return stock.id !== id
-    })
-    this.setState({
-      portfolioStocks: newArray
-    })
-  }
-
-  deleteStockFetch = (id) => {
-    fetch(`http://localhost:3000/stocks/${id}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization :`Bearer ${localStorage.getItem("token")}`,
-      }
-    })
-    .then(this.updatePortfolioStocks(id))
-  }
 
     // handlePortfolioChange = (id) => {
   //   this.setState({
@@ -223,7 +204,7 @@ class App extends Component {
       let tenEntries = Object.entries(prices).slice(0, 10)
       let dataArr = []
       tenEntries.forEach(entry => {
-        let obj = {"date": entry[0], 
+      let obj = {"date": entry[0], 
                    [ticker]: Number(entry[1]["4. close"])}
         dataArr.unshift(obj)
       })
@@ -279,11 +260,9 @@ class App extends Component {
         <Route exact path="/" component={()=> <LoginContainer handleSubmit={this.handleLoginSubmit}/>}/>
         <Route exact path="/profile" component={()=> {
           return this.state.currentUser && <ProfileContainer 
-            deleteStockFetch={this.deleteStockFetch}
             handleSearch={this.handleSearch}
             username={this.state.currentUser.username} 
             portfolioName={this.state.currentPortfolio.name}
-            fetchProfile={this.fetchProfile} 
             portfolioStocks={this.state.portfolioStocks}
             stockCardData={this.state.stockCardData}
             stockGraphData={this.state.stockGraphData}

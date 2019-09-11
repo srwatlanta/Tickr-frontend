@@ -43,7 +43,6 @@ class ProfileContainer extends Component {
     }
     
     render() {
-        console.log(this.props)
         return (
             <Grid container style={styles.bar} spacing={2}>
                 <Grid item xs={12} xl={12}>
