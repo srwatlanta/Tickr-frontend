@@ -61,40 +61,36 @@ const formatStockInfoForGraph = (allStocks) => {
     return firstTenObj
   }
   
-  const PortfolioGraphChart = (props) => {
-    const classes = useStyles();
-    let portStocks = []
-    props.stocks.forEach(stockData => portStocks.push(stockData))
-    let graphData = formatStockInfoForGraph(portStocks)
-    let username = props.user.username
-    return (
-      <div>
-        <Paper classdate={classes.root}>
-          <Typography variant="h5" component="h3">
-            {username}
-          </Typography>
-          <Typography variant="h5" component="h3">
-              <SelectPortfolio 
-                portfolioId={props.portfolioId}
-                handlePortfolioChange={props.handlePortfolioChange}
-                portfolios={props.user.portfolios}
-              />
-          </Typography>
-          <Typography component="p">
-              
-          </Typography>
-          <LineChart width={730} height={400} data={graphData}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              {makeLines(props.stockTickerData)}
-          </LineChart>
-        </Paper>
-      </div>
-    );
-  }
+const PortfolioGraphChart = (props) => {
+  const classes = useStyles();
+  let portStocks = []
+  props.stocks.forEach(stockData => portStocks.push(stockData))
+  let graphData = formatStockInfoForGraph(portStocks)
+
+  return (
+    <div>
+      <Paper classdate={classes.root}>
+        <Typography variant="h5" component="h3">
+            Welcome, {props.username}
+        </Typography>
+        <Typography variant="h5" component="h3">
+            Portfolio: {props.portfolioName}
+        </Typography>
+        <Typography component="p">
+            
+        </Typography>
+        <LineChart width={1000} height={600} data={graphData}
+        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="date" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            {makeLines(props.stockTickerData)}
+        </LineChart>
+      </Paper>
+    </div>
+  );
+}
 
 export default PortfolioGraphChart;

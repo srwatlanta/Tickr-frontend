@@ -4,17 +4,23 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import PortfolioGraphChart from '../components/PortfolioGraphChart';
 import StockCardContainer from './StockCardContainer'
+import StockNews from '../components/StockNews'
+import 'typeface-roboto';
 
 
 const styles = {
     bar: {
-        backgroundColor: '#ba68c8',
+        backgroundColor: '#eee',
         color: 'white'
+    },
+    newsBox:{
+        marginTop: "2%"
+    },
+    graphBox:{
+        marginTop: "5%",
+        marginRight: "1%"
     }
 }
-
-const stockAPIKEY = 'CH447Y09NPSTFX3A'
-const newsAPIKEY = '85216af2d9e046409f238846c9947b25'
 
 
 
@@ -23,21 +29,16 @@ class ProfileContainer extends Component {
         super()
         
     }
-
-    
     
     render() {
-        
+        console.log(this.props)
         return (
-            <Grid container>
+            <Grid container style={styles.bar}>
                 <Grid item xs={12}>
-                    <Grid container justify='center'>
+                    <Grid container justify='center' style={styles.graphBox}>
                         <Grid item>
                             <Paper>
-                                {/* <PortfolioGraphChart 
-                                stocks={this.props.stockGraphData} 
-                                user={this.props.user}
-                                /> */}
+                                <PortfolioGraphChart username={this.props.username} portfolioName={this.props.portfolioName} stocks={this.props.stockGraphData} stockTickerData={this.props.stockCardData}/>
                             </Paper>
                         </Grid>
                     </Grid>
@@ -52,21 +53,13 @@ class ProfileContainer extends Component {
                     </Grid>
                 </Grid>
 
-                <Grid item xs={6}>
-                    <Grid container justify='center'>
+                <Grid item xs={6} >
+                    <Grid container justify='center'  style={styles.newsBox}>
                     <Paper>
-                        <Typography>
-                            Hello
-                            <br></br>
-                            Hello
-                            <br/>
-                            Hello
-                            <br/>
-                            Hello
-                            <br/>
-                            Hello
-
+                        <Typography justify='center' variant="h5">
+                            Top Business News
                         </Typography>
+                        <StockNews news={this.props.topBusNews}/>
                     </Paper>
                     </Grid>
                 </Grid>

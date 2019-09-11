@@ -34,15 +34,12 @@ const GraphChart = (props) => {
       <Paper classdate={classes.root}>
         <Typography variant="h5" component="h3">
           {props.stock.ticker}
-          <Fab style={styles.button} aria-label="add" size="small">
+          <Fab style={styles.button} onClick={props.addStockToPortfolio} aria-label="add" size="small">
               <AddIcon />
           </Fab>
         </Typography>
         <Typography variant="h5" component="h3">
           {"$" + Number(props.stock.todayPrice)}
-        </Typography>
-        <Typography component="p">
-          Sector: Technology
         </Typography>
         <LineChart width={730} height={400} data={props.stockInfo}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
