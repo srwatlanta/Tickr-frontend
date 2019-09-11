@@ -5,9 +5,9 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 
-//Recharts 
-import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
+
 
 
 
@@ -38,15 +38,17 @@ const StockCard = (props) => {
       }    
 
     const calculateChange = () => {
-      let change = props.stock.todayPrice - props.stock.yesterdayPrice
-      let percent = (props.stock.todayPrice / change)
-      return `${Number(change)} (${Number(percent)} %)` 
+      let change = Number(Math.round((props.stock.todayPrice - props.stock.yesterdayPrice) + 'e2') + 'e-2')
+      let percent = Number(Math.round(((props.stock.todayPrice / props.stock.yesterdayPrice) - 1) + 'e2') + 'e-2')
+      return change > 0 ? `+${change} (${percent}) %` : `${change} (${percent}) %`
     }
+
+
     return (
         <Card className={classes.card}>
             <CardContent>
                 <Typography className={classes.title} color="textPrimary" component="h1" >
-                    {props.stock.ticker}
+                    {props.stock.ticker.toUpperCase()}
                 </Typography>
                 <Typography>
                     {props.stock.todayPrice}
@@ -56,11 +58,11 @@ const StockCard = (props) => {
                 </Typography>
 
                 <CardActions>
-                    <Button size="small" color="primary">
+                    <Button onClick={() => props.deleteStockFetch(props.stock.id)} size="small" color="primary">
                     Remove
                     </Button>
-                    <Button size="small" color="primary">
-                    Learn More
+                    <Button onClick={() => props.handleSearch(props.stock.ticker)} >
+                      Show More
                     </Button>
                 </CardActions>
             </CardContent>

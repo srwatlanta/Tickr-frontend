@@ -13,7 +13,7 @@ const styles = {
     }
 }
 
-const stockAPIKEY = 'XLWWWNITJQV4H0KC'
+const stockAPIKEY = 'CH447Y09NPSTFX3A'
 const newsAPIKEY = '85216af2d9e046409f238846c9947b25'
 
 
@@ -21,63 +21,13 @@ const newsAPIKEY = '85216af2d9e046409f238846c9947b25'
 class ProfileContainer extends Component {
     constructor(){
         super()
-        this.state = {
-            stockCardData: [],
-            stockGraphData: []
-        }
+        
     }
 
-    iterate = () => {
-        this.props.portfolioStocks.forEach(stock => {
-            this.fetchPortfolioStock(stock.ticker)
-        })
-    }
-
-    fetchPortfolioStock = (stock) => {
-        fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stock}&apikey=${stockAPIKEY}`)
-        .then(res => res.json())
-        .then(data => {
-            this.setStockCardData(data)
-            this.setStockGraphData(data)
-        })
-      }
-
-    setStockCardData = (data) => {
-        let ticker = data["Meta Data"]['2. Symbol']
-        let prices = data["Time Series (Daily)"]
-        let price = Object.entries(prices).slice(0,2)
-        let price1 = Number(price[0][1]["4. close"])
-        let price2 = Number(price[1][1]["4. close"])
-        let obj = {}
-        obj.ticker = ticker
-        obj.todayPrice = price1
-        obj.yesterdayPrice = price2
     
-        this.setState({
-            stockCardData: [...this.state.stockCardData, obj]
-        })
-    }
-
-    setStockGraphData = (data) => {
-        let ticker = data["Meta Data"]['2. Symbol']
-        let prices = data["Time Series (Daily)"]
-        let tenEntries = Object.entries(prices).slice(0, 10)
-        let dataArr = []
-        tenEntries.forEach(entry => {
-          let obj = {"date": entry[0], 
-                     [ticker]: Number(entry[1]["4. close"])}
-          dataArr.unshift(obj)
-        })
-        this.setState({
-            stockGraphData: [...this.state.stockGraphData, dataArr]
-        })
-      }
-
-    componentDidMount(){
-        this.iterate()
-    }
     
     render() {
+        
         return (
             <Grid container>
                 <Grid item xs={12}>
@@ -85,10 +35,7 @@ class ProfileContainer extends Component {
                         <Grid item>
                             <Paper>
                                 {/* <PortfolioGraphChart 
-                                stocks={this.state.stockGraphData} 
-                                stockTickerData={this.state.stockCardData}
-                                portfolioId={this.props.portfolioId}
-                                // handlePortfolioChange={this.props.handlePortfolioChange}
+                                stocks={this.props.stockGraphData} 
                                 user={this.props.user}
                                 /> */}
                             </Paper>
@@ -99,7 +46,7 @@ class ProfileContainer extends Component {
                     <Grid container justify='center'>
                         <Paper>
                             <Typography>
-                                <StockCardContainer stockCardData={this.state.stockCardData}/>
+                                <StockCardContainer deleteStockFetch={this.props.deleteStockFetch} handleSearch={this.props.handleSearch} stockCardData={this.props.stockCardData}/>
                             </Typography>
                         </Paper>
                     </Grid>
