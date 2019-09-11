@@ -113,8 +113,12 @@ class App extends Component {
   fetchSearchStockData = (stock) => {
     fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stock}&apikey=${stockAPIKEY}`)
     .then(res => res.json())
-    .then(data => {this.setSearchStockData(data)})
+    .then(data => {
+      data['Error Message'] ? alert("Not a Valid Ticker!") : this.setSearchStockData(data)
+    })
   }
+
+  
 
   setSelectedStockData = (data) => {
     let prices = data["Time Series (Daily)"]
@@ -275,7 +279,8 @@ class App extends Component {
         <Route exact path="/" component={()=> <LoginContainer handleSubmit={this.handleLoginSubmit}/>}/>
         <Route exact path="/profile" component={()=> {
           return this.state.currentUser && <ProfileContainer 
-
+            deleteStockFetch={this.deleteStockFetch}
+            handleSearch={this.handleSearch}
             username={this.state.currentUser.username} 
             portfolioName={this.state.currentPortfolio.name}
             fetchProfile={this.fetchProfile} 

@@ -43,21 +43,21 @@ const StockCard = (props) => {
       return change > 0 ? `+${change} (${percent}) %` : `${change} (${percent}) %`
     }
 
-
+    console.log(props)
     return (
         <Card className={classes.card}>
             <CardContent>
-                <Typography className={classes.title} color="textPrimary" component="h1" >
+                <Typography className={classes.title} color="textPrimary" component="h3" align="center">
                     {props.stock.ticker.toUpperCase()}
                 </Typography>
-                <Typography>
-                    {props.stock.todayPrice}
+                <Typography align="center" variant="h4">
+                    ${props.stock.todayPrice}
                 </Typography>
-                <Typography color="green">
+                <Typography color="green" align="center" variant="h5">
                     {calculateChange()}
                 </Typography>
 
-                <CardActions>
+                <CardActions align="center">
                     <Button onClick={() => props.deleteStockFetch(props.stock.id)} size="small" color="primary">
                     Remove
                     </Button>
