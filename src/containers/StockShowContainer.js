@@ -1,16 +1,8 @@
 import React, { Component } from 'react';
 import StockNews from '../components/StockNews'
-import StockInfo from '../components/StockInfo'
 import GraphChart from '../components/GraphChart'
 
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import SectorPieChart from '../components/PieChart';
 import Grid from '@material-ui/core/Grid';
-import StockCard from '../components/StockCard'
-import Fab from '@material-ui/core/Fab'
-import AddIcon from '@material-ui/icons/Add'
 
 
   
