@@ -5,11 +5,11 @@ import LoginContainer from './containers/LoginContainer'
 import ProfileContainer from './containers/ProfileContainer'
 import StockShowContainer from './containers/StockShowContainer'
 import { Component } from 'react';
-
+import StockNews from './components/StockNews'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 
-const stockAPIKEY = '5P5X5CSURTZ48C8X'
+const stockAPIKEY = '08G151DEIUICTJ2K'
 const newsAPIKEY = '85216af2d9e046409f238846c9947b25'
 // '5ad4e6f068cf44d88e8098b2925d04d2'
 
@@ -19,7 +19,7 @@ class App extends Component {
     super()
     this.state = {
       currentUser: null,
-      currentPortfolio: 3,
+      currentPortfolio: null,
       portfolioStocks: [],
       selectedStock: {
         ticker: null,
@@ -29,7 +29,8 @@ class App extends Component {
       },
       selectedStockInfo: null,
       stockCardData: [],
-      stockGraphData: []
+      stockGraphData: [],
+      topBusNews: []
     }
   }
 
@@ -45,7 +46,10 @@ class App extends Component {
       })
     })
     .then(res => res.json())
-    .then(user => this.setState({currentUser: user.user}, localStorage.setItem("token", user.jwt)))
+    .then(user => this.setState({
+      currentUser: user.user,
+      currentPortfolio: data.user.portfolios[0]
+    }, localStorage.setItem("token", user.jwt)))
   }
 
   fetchProfile = () => {
@@ -56,13 +60,14 @@ class App extends Component {
       }
     })
     .then(res => res.json())
-    .then(data => this.setState({currentUser: data.user},
+    .then(data => {this.setState({
+      currentUser: data.user,
+      currentPortfolio: data.user.portfolios[0]
+    },
       () => this.state.currentUser ? this.filterStocks() : null
-    ))
+    )})
     .then(()=>this.iterate())
-    
-
-    }
+  }
 
   logOut = () => {
     localStorage.clear()
@@ -79,7 +84,7 @@ class App extends Component {
 
   filterStocks = () => {
     let filteredStocks = this.state.currentUser.stocks.filter(stock => {
-      return stock.portfolio_id === this.state.currentPortfolio
+      return stock.portfolio_id === this.state.currentPortfolio.id
     })
     this.setState({
       portfolioStocks: filteredStocks
@@ -87,8 +92,8 @@ class App extends Component {
   }
 
   componentDidMount(){
-    this.fetchProfile()
-    
+    localStorage.getItem('token') && this.fetchProfile()
+    this.fetchTopNews()
   }
 
   fetchShowInfo = (query) => {
@@ -152,7 +157,6 @@ class App extends Component {
 
   //Functions for ProfileContainer
   iterate = () => {
-    console.log(this.state)
     this.state.portfolioStocks.forEach(stock => {
         this.fetchPortfolioStock(stock.ticker)
     })
@@ -168,7 +172,7 @@ class App extends Component {
     }
 
   setStockCardData = (data) => {
-    console.log(data)
+    
     let ticker = data["Meta Data"]['2. Symbol']
     let prices = data["Time Series (Daily)"]
     let price = Object.entries(prices).slice(0,2)
@@ -197,17 +201,38 @@ class App extends Component {
       this.setState({
           stockGraphData: [...this.state.stockGraphData, dataArr]
       })
-    }
+  }
 
+  //Add Stock to Current Portfolio
+  addStockToPortfolio = () => {
+    let portfolio = this.state.currentPortfolio.id
+    let stockToAdd = this.state.selectedStock.ticker
+    fetch("http://localhost:3000/stocks", {
+      method:"POST",
+      headers: {
+        Authorization :`Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+        'Accepts': 'application/json'
+      }, 
+      body: JSON.stringify({
+        ticker: stockToAdd,
+        portfolio_id: portfolio
+      })
+    })
+  }
 
-
-
-
-
+  //Add Daily Main Top News Stories to Portfolio Page
+  fetchTopNews = () => {
+    fetch(`https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${newsAPIKEY}`)
+    .then(res => res.json())
+    .then(data => this.setState({
+      topBusNews: data.articles
+    }))
+  }
 
 
   render() {
-    
+    console.log("in render", this.state)
     return (
       <Router >
         <NavBar user={this.state.currentUser} logOut={this.logOut} handleSearch={this.handleSearch}/>
@@ -224,15 +249,25 @@ class App extends Component {
           }
 
         <Route exact path="/" component={()=> <LoginContainer handleSubmit={this.handleLoginSubmit}/>}/>
-        <Route exact path="/profile" component={()=> 
-          <ProfileContainer 
-          user={this.state.currentUser} 
-          fetchProfile={this.fetchProfile} 
-          portfolioStocks={this.state.portfolioStocks}
-          stockCardData={this.state.stockCardData}
-          stockGraphData={this.state.stockGraphData}
-          /> } /> 
-        <Route exact path={`/stocks/${this.state.selectedStock.ticker}`} component={() => <StockShowContainer stockInfo={this.state.selectedStockInfo} stock={this.state.selectedStock}/> } />
+        <Route exact path="/profile" component={()=> {
+          return this.state.currentUser && <ProfileContainer 
+
+            username={this.state.currentUser.username} 
+            portfolioName={this.state.currentPortfolio.name}
+            fetchProfile={this.fetchProfile} 
+            portfolioStocks={this.state.portfolioStocks}
+            stockCardData={this.state.stockCardData}
+            stockGraphData={this.state.stockGraphData}
+            topBusNews={this.state.topBusNews}
+          /> 
+           } 
+           } /> 
+        <Route exact path={`/stocks/${this.state.selectedStock.ticker}`} component={() => 
+          <StockShowContainer 
+            stockInfo={this.state.selectedStockInfo} 
+            stock={this.state.selectedStock}
+            addStockToPortfolio={this.addStockToPortfolio}
+          /> } />
       </Router>
     );
   }

@@ -7,16 +7,22 @@ import PortfolioGraphChart from '../components/PortfolioGraphChart';
 import TextField from '@material-ui/core/TextField'
 import {Button} from '@material-ui/core'
 import StockCardContainer from './StockCardContainer'
+import StockNews from '../components/StockNews'
+import 'typeface-roboto';
 
 const styles = {
     bar: {
-        backgroundColor: '#ba68c8',
+        backgroundColor: '#eee',
         color: 'white'
+    },
+    newsBox:{
+        marginTop: "2%"
+    },
+    graphBox:{
+        marginTop: "5%",
+        marginRight: "1%"
     }
 }
-
-const stockAPIKEY = 'CH447Y09NPSTFX3A'
-const newsAPIKEY = '85216af2d9e046409f238846c9947b25'
 
 
 
@@ -25,67 +31,16 @@ class ProfileContainer extends Component {
         super()
         
     }
-
-
-    // iterate = () => {
-    //     this.props.portfolioStocks.length > 1 &&
-    //         this.props.portfolioStocks.forEach(stock => {
-    //             // this.fetchPortfolioStock(stock.ticker)
-    //         })
-    // }
-
-    // fetchPortfolioStock = (stock) => {
-    //     fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stock}&apikey=${stockAPIKEY}`)
-    //     .then(res => res.json())
-    //     .then(data => {
-    //         this.setStockCardData(data)
-    //         this.setStockGraphData(data)
-    //     })
-    //   }
-
-    // setStockCardData = (data) => {
-    //     console.log(data)
-    //     let ticker = data["Meta Data"]['2. Symbol']
-    //     let prices = data["Time Series (Daily)"]
-    //     let price = Object.entries(prices).slice(0,2)
-    //     let price1 = Number(price[0][1]["4. close"])
-    //     let price2 = Number(price[1][1]["4. close"])
-    //     let obj = {}
-    //     obj.ticker = ticker
-    //     obj.todayPrice = price1
-    //     obj.yesterdayPrice = price2
-    
-    //     this.setState({
-    //         stockCardData: [...this.state.stockCardData, obj]
-    //     })
-    // }
-
-    // setStockGraphData = (data) => {
-    //     let ticker = data["Meta Data"]['2. Symbol']
-    //     let prices = data["Time Series (Daily)"]
-    //     let tenEntries = Object.entries(prices).slice(0, 10)
-    //     let dataArr = []
-    //     tenEntries.forEach(entry => {
-    //       let obj = {"date": entry[0], 
-    //                  [ticker]: Number(entry[1]["4. close"])}
-    //       dataArr.unshift(obj)
-    //     })
-    //     this.setState({
-    //         stockGraphData: [...this.state.stockGraphData, dataArr]
-    //     })
-    //   }
-
-    
     
     render() {
-        
+        console.log(this.props)
         return (
-            <Grid container>
+            <Grid container style={styles.bar}>
                 <Grid item xs={12}>
-                    <Grid container justify='center'>
+                    <Grid container justify='center' style={styles.graphBox}>
                         <Grid item>
                             <Paper>
-                                <PortfolioGraphChart stocks={this.props.stockGraphData} stockTickerData={this.props.stockCardData}/>
+                                <PortfolioGraphChart username={this.props.username} portfolioName={this.props.portfolioName} stocks={this.props.stockGraphData} stockTickerData={this.props.stockCardData}/>
                             </Paper>
                         </Grid>
                     </Grid>
@@ -100,21 +55,13 @@ class ProfileContainer extends Component {
                     </Grid>
                 </Grid>
 
-                <Grid item xs={6}>
-                    <Grid container justify='center'>
+                <Grid item xs={6} >
+                    <Grid container justify='center'  style={styles.newsBox}>
                     <Paper>
-                        <Typography>
-                            Hello
-                            <br></br>
-                            Hello
-                            <br/>
-                            Hello
-                            <br/>
-                            Hello
-                            <br/>
-                            Hello
-
+                        <Typography justify='center' variant="h5">
+                            Top Business News
                         </Typography>
+                        <StockNews news={this.props.topBusNews}/>
                     </Paper>
                     </Grid>
                 </Grid>
