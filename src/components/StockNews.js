@@ -25,7 +25,7 @@ class StockNews extends Component {
     render() {
         // console.log(this.props)
         return (
-           <Paper>
+           <Paper style={{maxHeight: 500, overflow: 'auto'}}>
                <List>
                     {this.renderNews()}
                </List>

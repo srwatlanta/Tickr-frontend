@@ -30,7 +30,7 @@ class StockShowContainer extends Component {
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Grid container justify="center">
-                            <GraphChart stockInfo={this.props.stockInfo} stock={this.props.stock}/>
+                            <GraphChart stockInfo={this.props.stockInfo} stock={this.props.stock} addStockToPortfolio={this.props.addStockToPortfolio}/>
                         </Grid>
                     </Grid>
                     <Grid item xs={12}>

@@ -60,25 +60,27 @@ const formatStockInfoForGraph = (allStocks) => {
     return firstTenObj
   }
   
-  const PortfolioGraphChart = (props) => {
-    const classes = useStyles();
-    let portStocks = []
-    props.stocks.forEach(stockData => portStocks.push(stockData))
-    let graphData = formatStockInfoForGraph(portStocks)
+const PortfolioGraphChart = (props) => {
+  const classes = useStyles();
+  let portStocks = []
+  props.stocks.forEach(stockData => portStocks.push(stockData))
+  let graphData = formatStockInfoForGraph(portStocks)
+
+  console.log(props)
 
   return (
     <div>
       <Paper classdate={classes.root}>
         <Typography variant="h5" component="h3">
-          UserName
+            Welcome, {props.username}
         </Typography>
         <Typography variant="h5" component="h3">
-            Portfolio Name
+            Portfolio: {props.portfolioName}
         </Typography>
         <Typography component="p">
             
         </Typography>
-        <LineChart width={730} height={400} data={graphData}
+        <LineChart width={1000} height={600} data={graphData}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="date" />
