@@ -5,13 +5,13 @@ import LoginContainer from './containers/LoginContainer'
 import ProfileContainer from './containers/ProfileContainer'
 import StockShowContainer from './containers/StockShowContainer'
 import { Component } from 'react';
-import UserBar from './components/UserBar';
+
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 
-const stockAPIKEY = 'CH447Y09NPSTFX3A'
+const stockAPIKEY = '5P5X5CSURTZ48C8X'
 const newsAPIKEY = '85216af2d9e046409f238846c9947b25'
-
+// '5ad4e6f068cf44d88e8098b2925d04d2'
 
 
 class App extends Component {
@@ -28,6 +28,8 @@ class App extends Component {
         news: []
       },
       selectedStockInfo: null,
+      stockCardData: [],
+      stockGraphData: []
     }
   }
 
@@ -56,7 +58,10 @@ class App extends Component {
     .then(res => res.json())
     .then(data => this.setState({currentUser: data.user},
       () => this.state.currentUser ? this.filterStocks() : null
-      ))
+    ))
+    .then(()=>this.iterate())
+    
+
     }
 
   logOut = () => {
@@ -83,6 +88,7 @@ class App extends Component {
 
   componentDidMount(){
     this.fetchProfile()
+    
   }
 
   fetchShowInfo = (query) => {
@@ -91,20 +97,18 @@ class App extends Component {
   }
 
   fetchNewsData = (query) => {
-    fetch('https://newsapi.org/v2/everything?q=' + query + '&from=2019-08-10&sortBy=publishedAt&apiKey=' + newsAPIKEY)
+    fetch('https://newsapi.org/v2/everything?q=' + query + '&from=2019-09-10&sortBy=publishedAt&apiKey=' + newsAPIKEY)
     .then(res => res.json())
     .then(news => this.setState(prevState => ({
       selectedStock: {...prevState.selectedStock, news: news.articles}
     }))
   )}
 
-
-
   //Fetch Stock Data
   fetchSearchStockData = (stock) => {
     fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stock}&apikey=${stockAPIKEY}`)
     .then(res => res.json())
-    .then(data => this.setSearchStockData(data))
+    .then(data => {this.setSearchStockData(data)})
   }
 
   setSelectedStockData = (data) => {
@@ -146,7 +150,64 @@ class App extends Component {
     )
   }
 
+  //Functions for ProfileContainer
+  iterate = () => {
+    console.log(this.state)
+    this.state.portfolioStocks.forEach(stock => {
+        this.fetchPortfolioStock(stock.ticker)
+    })
+  }
+
+  fetchPortfolioStock = (stock) => {
+      fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stock}&apikey=${stockAPIKEY}`)
+      .then(res => res.json())
+      .then(data => {
+          this.setStockCardData(data)
+          this.setStockGraphData(data)
+      })
+    }
+
+  setStockCardData = (data) => {
+    console.log(data)
+    let ticker = data["Meta Data"]['2. Symbol']
+    let prices = data["Time Series (Daily)"]
+    let price = Object.entries(prices).slice(0,2)
+    let price1 = Number(price[0][1]["4. close"])
+    let price2 = Number(price[1][1]["4. close"])
+    let obj = {}
+    obj.ticker = ticker
+    obj.todayPrice = price1
+    obj.yesterdayPrice = price2
+
+    this.setState({
+        stockCardData: [...this.state.stockCardData, obj]
+    })
+  }
+
+  setStockGraphData = (data) => {
+      let ticker = data["Meta Data"]['2. Symbol']
+      let prices = data["Time Series (Daily)"]
+      let tenEntries = Object.entries(prices).slice(0, 10)
+      let dataArr = []
+      tenEntries.forEach(entry => {
+        let obj = {"date": entry[0], 
+                   [ticker]: Number(entry[1]["4. close"])}
+        dataArr.unshift(obj)
+      })
+      this.setState({
+          stockGraphData: [...this.state.stockGraphData, dataArr]
+      })
+    }
+
+
+
+
+
+
+
+
   render() {
+    
     return (
       <Router >
         <NavBar user={this.state.currentUser} logOut={this.logOut} handleSearch={this.handleSearch}/>
@@ -163,7 +224,14 @@ class App extends Component {
           }
 
         <Route exact path="/" component={()=> <LoginContainer handleSubmit={this.handleLoginSubmit}/>}/>
-        <Route exact path="/profile" component={()=> <ProfileContainer user={this.state.currentUser} fetchProfile={this.fetchProfile} portfolioStocks={this.state.portfolioStocks}/> } /> 
+        <Route exact path="/profile" component={()=> 
+          <ProfileContainer 
+          user={this.state.currentUser} 
+          fetchProfile={this.fetchProfile} 
+          portfolioStocks={this.state.portfolioStocks}
+          stockCardData={this.state.stockCardData}
+          stockGraphData={this.state.stockGraphData}
+          /> } /> 
         <Route exact path={`/stocks/${this.state.selectedStock.ticker}`} component={() => <StockShowContainer stockInfo={this.state.selectedStockInfo} stock={this.state.selectedStock}/> } />
       </Router>
     );
