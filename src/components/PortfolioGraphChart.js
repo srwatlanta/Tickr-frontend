@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   } from 'recharts';
+import SelectPortfolio from './SelectPortfolio';
 
 
 const useStyles = makeStyles(theme => ({
@@ -65,8 +66,6 @@ const PortfolioGraphChart = (props) => {
   let portStocks = []
   props.stocks.forEach(stockData => portStocks.push(stockData))
   let graphData = formatStockInfoForGraph(portStocks)
-
-  console.log(props)
 
   return (
     <div>

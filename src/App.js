@@ -155,30 +155,55 @@ class App extends Component {
     )
   }
 
+  updatePortfolioStocks = (id) => {
+    let newArray = this.state.portfolioStocks.filter(stock => {
+      return stock.id !== id
+    })
+    this.setState({
+      portfolioStocks: newArray
+    })
+  }
+
+  deleteStockFetch = (id) => {
+    fetch(`http://localhost:3000/stocks/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization :`Bearer ${localStorage.getItem("token")}`,
+      }
+    })
+    .then(this.updatePortfolioStocks(id))
+  }
+
+    // handlePortfolioChange = (id) => {
+  //   this.setState({
+  //     currentPortfolio: id
+  //   })
+  // }
+
   //Functions for ProfileContainer
   iterate = () => {
     this.state.portfolioStocks.forEach(stock => {
-        this.fetchPortfolioStock(stock.ticker)
+        this.fetchPortfolioStock(stock)
     })
   }
 
   fetchPortfolioStock = (stock) => {
-      fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stock}&apikey=${stockAPIKEY}`)
+      fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stock.ticker}&apikey=${stockAPIKEY}`)
       .then(res => res.json())
       .then(data => {
-          this.setStockCardData(data)
+          this.setStockCardData(data, stock.id)
           this.setStockGraphData(data)
       })
     }
 
-  setStockCardData = (data) => {
-    
+  setStockCardData = (data, id) => {
     let ticker = data["Meta Data"]['2. Symbol']
     let prices = data["Time Series (Daily)"]
     let price = Object.entries(prices).slice(0,2)
     let price1 = Number(price[0][1]["4. close"])
     let price2 = Number(price[1][1]["4. close"])
     let obj = {}
+    obj.id = id
     obj.ticker = ticker
     obj.todayPrice = price1
     obj.yesterdayPrice = price2
@@ -232,7 +257,6 @@ class App extends Component {
 
 
   render() {
-    console.log("in render", this.state)
     return (
       <Router >
         <NavBar user={this.state.currentUser} logOut={this.logOut} handleSearch={this.handleSearch}/>

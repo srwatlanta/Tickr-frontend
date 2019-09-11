@@ -5,6 +5,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
+
 
 
 
@@ -29,34 +31,38 @@ const useStyles = makeStyles({
 
 
 const StockCard = (props) => {
-    console.log(props)
     const classes = useStyles();
     const capitalize = (s) => {
         if (typeof s !== 'string') return ''
         return s.charAt(0).toUpperCase() + s.slice(1)
       }    
+
+    const calculateChange = () => {
+      let change = Number(Math.round((props.stock.todayPrice - props.stock.yesterdayPrice) + 'e2') + 'e-2')
+      let percent = Number(Math.round(((props.stock.todayPrice / props.stock.yesterdayPrice) - 1) + 'e2') + 'e-2')
+      return change > 0 ? `+${change} (${percent}) %` : `${change} (${percent}) %`
+    }
+
+
     return (
         <Card className={classes.card}>
             <CardContent>
                 <Typography className={classes.title} color="textPrimary" component="h1" >
-                    {props.stock.ticker}
-                </Typography>
-                <Typography variant="h5" component="h2" color="textSecondary">
-                Sector: {capitalize(props.stock.sector)}
+                    {props.stock.ticker.toUpperCase()}
                 </Typography>
                 <Typography>
-                    $213.26
+                    {props.stock.todayPrice}
                 </Typography>
                 <Typography color="green">
-                    1.26 (1.2%)
+                    {calculateChange()}
                 </Typography>
 
                 <CardActions>
-                    <Button size="small" color="primary">
+                    <Button onClick={() => props.deleteStockFetch(props.stock.id)} size="small" color="primary">
                     Remove
                     </Button>
-                    <Button size="small" color="primary">
-                    Learn More
+                    <Button onClick={() => props.handleSearch(props.stock.ticker)} >
+                      Show More
                     </Button>
                 </CardActions>
             </CardContent>
