@@ -31,7 +31,6 @@ class ProfileContainer extends Component {
     }
     
     render() {
-        console.log(this.props)
         return (
             <Grid container style={styles.bar}>
                 <Grid item xs={12}>
@@ -47,7 +46,7 @@ class ProfileContainer extends Component {
                     <Grid container justify='center'>
                         <Paper>
                             <Typography>
-                                <StockCardContainer deleteStockFetch={this.props.deleteStockFetch} handleSearch={this.props.handleSearch} stockCardData={this.props.stockCardData}/>
+                                <StockCardContainer handleSearch={this.props.handleSearch} stockCardData={this.props.stockCardData}/>
                             </Typography>
                         </Paper>
                     </Grid>
