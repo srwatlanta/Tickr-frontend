@@ -51,13 +51,13 @@ const StockCard = (props) => {
     return (
         <Card className={classes.card}>
             <CardContent>
-                <Typography className={classes.title} color="textPrimary" component="h1" >
+                <Typography className={classes.title} color="textPrimary" component="h3" align="center">
                     {props.stock.ticker.toUpperCase()}
                 </Typography>
-                <Typography>
-                    {props.stock.todayPrice}
+                <Typography align="center" variant="h4">
+                    ${props.stock.todayPrice}
                 </Typography>
-                <Typography color="green">
+                <Typography color="green" align="center" variant="h5">
                     {calculateChange()}
                 </Typography>
 

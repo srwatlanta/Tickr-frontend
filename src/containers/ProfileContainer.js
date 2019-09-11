@@ -6,7 +6,7 @@ import PortfolioGraphChart from '../components/PortfolioGraphChart';
 import StockCardContainer from './StockCardContainer'
 import StockNews from '../components/StockNews'
 import 'typeface-roboto';
-
+import Container from '@material-ui/core/Container'
 
 const styles = {
     bar: {
@@ -14,12 +14,24 @@ const styles = {
         color: 'white'
     },
     newsBox:{
-        marginTop: "2%"
+        marginTop: "2%",
+        maxWidth: "650px",
+        
     },
     graphBox:{
         marginTop: "5%",
-        marginRight: "1%"
+        
+    },
+    stockBox:{
+        marginTop:"2%",
+        marginLeft:"8%",
+        maxWidth: "650px"
+       
+    },
+    header:{
+        backgroundColor: '#f2ab38'
     }
+
 }
 
 
@@ -32,8 +44,8 @@ class ProfileContainer extends Component {
     
     render() {
         return (
-            <Grid container style={styles.bar}>
-                <Grid item xs={12}>
+            <Grid container style={styles.bar} spacing={2}>
+                <Grid item xs={12} xl={12}>
                     <Grid container justify='center' style={styles.graphBox}>
                         <Grid item>
                             <Paper>
@@ -43,23 +55,26 @@ class ProfileContainer extends Component {
                     </Grid>
                 </Grid>
                 <Grid item xs={6}>
-                    <Grid container justify='center'>
-                        <Paper>
-                            <Typography>
-                                <StockCardContainer handleSearch={this.props.handleSearch} stockCardData={this.props.stockCardData}/>
+                    <Grid container justify='center' style={styles.stockBox}>
+                        
+                        <Paper style={styles.header}>
+                            <Typography align="center" gutterBottom variant="h5">
+                                Your Portfolio
                             </Typography>
+                            <StockCardContainer deleteStockFetch={this.props.deleteStockFetch} handleSearch={this.props.handleSearch} stockCardData={this.props.stockCardData}/>
                         </Paper>
+                        
                     </Grid>
                 </Grid>
 
                 <Grid item xs={6} >
                     <Grid container justify='center'  style={styles.newsBox}>
-                    <Paper>
-                        <Typography justify='center' variant="h5">
-                            Top Business News
-                        </Typography>
-                        <StockNews news={this.props.topBusNews}/>
-                    </Paper>
+                        <Paper style={styles.header}>
+                            <Typography align='center' gutterBottom variant="h5">
+                                Top Business News
+                            </Typography>
+                            <StockNews news={this.props.topBusNews}/>
+                        </Paper>
                     </Grid>
                 </Grid>
             </Grid>

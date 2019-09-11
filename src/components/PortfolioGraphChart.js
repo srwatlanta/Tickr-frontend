@@ -68,18 +68,18 @@ const PortfolioGraphChart = (props) => {
   let graphData = formatStockInfoForGraph(portStocks)
 
   return (
-    <div>
+    
       <Paper classdate={classes.root}>
-        <Typography variant="h5" component="h3">
+        <Typography variant="h3" component="h3" align="center">
             Welcome, {props.username}
         </Typography>
-        <Typography variant="h5" component="h3">
+        <Typography variant="h4" component="h3" align="center">
             Portfolio: {props.portfolioName}
         </Typography>
         <Typography component="p">
             
         </Typography>
-        <LineChart width={1000} height={600} data={graphData}
+        <LineChart width={1300} height={600} data={graphData}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="date" />
@@ -89,7 +89,7 @@ const PortfolioGraphChart = (props) => {
             {makeLines(props.stockTickerData)}
         </LineChart>
       </Paper>
-    </div>
+    
   );
 }
 

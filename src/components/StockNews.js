@@ -15,7 +15,7 @@ class StockNews extends Component {
     renderNews = () => {
         return this.props.news.map(story => {
             return (
-                <this.ListItemLink href={story.url}>
+                <this.ListItemLink href={story.url} target="_blank">
                     <ListItemText primary={story.title} secondary={story.description} />
                 </this.ListItemLink>
             )

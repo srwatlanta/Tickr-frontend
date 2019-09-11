@@ -18,7 +18,10 @@ const styles = {
         bottom: '5%',
         right: '5%',
         backgroundColor: '#fb8c00'
-    }  
+    } ,
+    graph:{
+        marginTop: "2%"
+    } 
 }
 
 class StockShowContainer extends Component {
@@ -28,7 +31,7 @@ class StockShowContainer extends Component {
         return (
             <div style={styles.bar}>
                 <Grid container spacing={2}>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} style={styles.graph}>
                         <Grid container justify="center">
                             <GraphChart stockInfo={this.props.stockInfo} stock={this.props.stock} addStockToPortfolio={this.props.addStockToPortfolio}/>
                         </Grid>

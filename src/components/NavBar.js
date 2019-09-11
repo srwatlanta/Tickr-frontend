@@ -43,35 +43,39 @@ class NavBar extends Component {
             <Grid container >
                 <AppBar position="static" style={styles.bar}>
                     <Toolbar>
-                        <Grid item xs={9}>
-                            <IconButton edge="start"  aria-label="menu">
-                                {this.props.user &&
-                                <UserBar user={this.props.user} logOut={this.props.logOut}/> 
-                                }    
-                            </IconButton>
-                        
-                            <Typography variant="h6">
-                                TICKR
+                        <Grid item xs={4}>
+                            <Grid container align="center">
+                                <IconButton edge="start"  aria-label="menu">
+                                    {this.props.user &&
+                                    <UserBar user={this.props.user} logOut={this.props.logOut}/> 
+                                    }    
+                                </IconButton>
+                                <Typography variant="h3" justify="center">
+                                    TICKR
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Typography>
+
                             </Typography>
                         </Grid>
-                        <Grid item xs={3}>
-                            <div>
-                                <form>   
-                                    <TextField
-                                        id="outlined-email-input"
-                                        label="search"
-                                        type="search"
-                                        name="search"
-                                        autoComplete="search"
-                                        margin="normal"
-                                        variant="outlined"
-                                        onChange={this.handleChange}/
-                                    >
-                                    <Fab aria-label="add" onClick={this.handleSearch} style={styles.button}>
-                                        <SearchTwoToneIcon />
-                                    </Fab>
-                                </form>
-                            </div>
+                        <Grid item xs={4}>
+                            <form>   
+                                <TextField
+                                    id="outlined-email-input"
+                                    label="search"
+                                    type="search"
+                                    name="search"
+                                    autoComplete="search"
+                                    margin="normal"
+                                    variant="outlined"
+                                    onChange={this.handleChange}/
+                                >
+                                <Fab aria-label="add" onClick={this.handleSearch} style={styles.button}>
+                                    <SearchTwoToneIcon />
+                                </Fab>
+                            </form>
                         </Grid>
                     </Toolbar>
                 </AppBar>

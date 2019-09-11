@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import StockCard from '../components/StockCard'
 import Grid from '@material-ui/core/Grid';
-
-
+import Typography from '@material-ui/core/Typography'
+import Paper from "@material-ui/core/Paper"
 class StockCardContainer extends Component {
     constructor(props){
         super(props)
@@ -34,10 +34,10 @@ class StockCardContainer extends Component {
         return this.state.data.map(stock => {
             return (
             <Grid item xs={6}>
-                <Grid container spacing={2}>
-                    <Grid item>
+                <Grid container spacing={2} justify="center">
+                    
                         <StockCard key={`Stock card ${stock.id}`} deleteStockFetch={this.deleteStockFetch} stock={stock} handleSearch={this.props.handleSearch}/>
-                    </Grid>
+                    
                 </Grid>
             </Grid>
         )})
@@ -45,9 +45,11 @@ class StockCardContainer extends Component {
     
     render() {
         return (
-            <Grid container spacing={2}>
-                {this.createCards()}
-            </Grid>
+            <Paper style={{maxHeight: 500, overflow: 'auto'}}>
+                <Grid container spacing={5}>
+                    {this.createCards()}
+                </Grid>
+            </Paper>
         );
     }
 }
