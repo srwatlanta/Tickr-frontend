@@ -19,7 +19,7 @@ class App extends Component {
     super()
     this.state = {
       currentUser: null,
-      currentPortfolio: 2,
+      currentPortfolio: 3,
       portfolioStocks: [],
       selectedStock: {
         ticker: null,
