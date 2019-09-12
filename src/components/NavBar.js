@@ -66,20 +66,24 @@ class NavBar extends Component {
                             </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                            <form id="search-form">   
-                            <TextField
-                                id="outlined-search"
-                                label="Search"
-                                margin="normal"
-                                variant="outlined"
-                                name="search"
-                                value={this.state.search}
-                                onChange={this.handleChange}
-                                />
-                                <Fab aria-label="add" onClick={this.handleSearch} style={styles.button} size="small">
-                                    <SearchTwoToneIcon />
-                                </Fab>
-                            </form>
+                            {this.props.user ?
+                                <form id="search-form">   
+                                <TextField
+                                    id="outlined-search"
+                                    label="Search"
+                                    margin="normal"
+                                    variant="outlined"
+                                    name="search"
+                                    value={this.state.search}
+                                    onChange={this.handleChange}
+                                    />
+                                    <Fab aria-label="add" onClick={this.handleSearch} style={styles.button} size="small">
+                                        <SearchTwoToneIcon />
+                                    </Fab>
+                                </form>
+                                :
+                                null
+                            }
                         </Grid>
                     </Toolbar>
                 </AppBar>

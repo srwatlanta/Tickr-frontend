@@ -129,22 +129,27 @@ class ProfileContainer extends Component {
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item xs={12} xl={12}>
-                    <Grid container justify='center' style={styles.stockBox}>
-                        <Paper style={styles.header}>
-                            <Typography align="left" gutterBottom variant="h5" style={styles.text}>
-                                Your Portfolio
-                            </Typography>
-                            <StockCardContainer 
-                                editPortfolioStocks={this.props.editPortfolioStocks}
-                                deleteStockFetch={this.props.deleteStockFetch} 
-                                handleSearch={this.props.handleSearch} 
-                                stockCardData={this.state.stockCardData}
-                            />
-                        </Paper>
-                        
+                {this.props.portfolioStocks.length > 0 ?
+                    <Grid item xs={12} xl={12}>
+                        <Grid container justify='center' style={styles.stockBox}>
+                            <Grid item xs={10}>
+                                <Paper style={styles.header}>
+                                    <Typography align="left" gutterBottom variant="h5" style={styles.text}>
+                                        Your Portfolio
+                                    </Typography>
+                                    <StockCardContainer 
+                                        editPortfolioStocks={this.props.editPortfolioStocks}
+                                        deleteStockFetch={this.props.deleteStockFetch} 
+                                        handleSearch={this.props.handleSearch} 
+                                        stockCardData={this.state.stockCardData}
+                                    />
+                                </Paper>
+                            </Grid>
+                        </Grid>
                     </Grid>
-                </Grid>
+                    :
+                    null
+                }
 
                 <Grid item xs={12} xl={12} align="center">
                     <Grid container justify='center'  style={styles.newsBox}>

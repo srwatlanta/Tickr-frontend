@@ -12,7 +12,7 @@ class StockCardContainer extends Component {
             return (
             <Grid item xs={4} >
                 <Grid container justify="center">
-                        <StockCard key={`Stock card ${stock.id}`} deleteStockFetch={this.deleteStockFetch} stock={stock} handleSearch={this.props.handleSearch}/>  
+                        <StockCard key={`Stock card ${stock.id}`} deleteStockFetch={this.props.deleteStockFetch} stock={stock} handleSearch={this.props.handleSearch}/>  
                 </Grid>
             </Grid>
         )})

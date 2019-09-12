@@ -125,8 +125,9 @@ class App extends Component {
         ticker: null,
         todayPrice: null,
         yesterdayPrice: null,
-        news: []
+        news: [],
       },
+      portfolioStocks: []
     })
   }
 

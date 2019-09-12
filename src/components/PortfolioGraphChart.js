@@ -80,27 +80,22 @@ const formatStockInfoForGraph = (allStocks) => {
     props.stocks.length > 0 ?
       <Paper classdate={classes.root}>
         <Grid container>
-        {/* <Typography variant="h3" component="h3" align="center">
-            Welcome, {props.username}
-        </Typography> */}
           <Grid item xs={4} align="center">
             <SelectPortfolio 
               currentPortfolio={props.currentPortfolio} 
               portfolios={props.portfolioOptions}
               setCurrentPortfolio={props.setCurrentPortfolio}
-              deletePortfolio={props.deletePortfolio}
-              
+              deletePortfolio={props.deletePortfolio}  
             />
           </Grid>
           <Grid item xs={4}>
-
           </Grid>
           <Grid item xs={4} align="right">
             <AddPortfolio handleAddPortfolio={props.handleAddPortfolio}/>
           </Grid>
           <Grid item xs={12}>
             <br />
-            <LineChart  width={1500} height={600} data={graphData}
+            <LineChart  width={1300} height={600} data={graphData}
             margin={{ top: 5, right: 30, left: 80, bottom: 15 }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="date" padding={{bottom: 50}} />
@@ -115,7 +110,6 @@ const formatStockInfoForGraph = (allStocks) => {
       </Paper>
       :
       <Paper classdate={classes.root}>
-
         <Grid container>
           <Grid item xs={6}>
             <SelectPortfolio 
@@ -124,7 +118,8 @@ const formatStockInfoForGraph = (allStocks) => {
               setCurrentPortfolio={props.setCurrentPortfolio}
               deletePortfolio={props.deletePortfolio}
             />
-            
+          </Grid>
+          <Grid item xs={4}>
           </Grid>
           <Grid item xs={6} align="right" >
             <Grid container>
