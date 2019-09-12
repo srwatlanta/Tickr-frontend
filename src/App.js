@@ -65,7 +65,6 @@ class App extends Component {
     },
       () => this.state.currentUser ? this.filterStocks() : null
     )})
-    .then(()=>this.iterate())
   }
 
   logOut = () => {
@@ -87,7 +86,7 @@ class App extends Component {
     })
     this.setState({
       portfolioStocks: filteredStocks
-    })
+    }, () => this.iterate())
   }
 
   componentDidMount(){
@@ -116,8 +115,6 @@ class App extends Component {
       data['Error Message'] ? alert("Not a Valid Ticker!") : this.setSearchStockData(data)
     })
   }
-
-  
 
   setSelectedStockData = (data) => {
     let prices = data["Time Series (Daily)"]
@@ -157,13 +154,6 @@ class App extends Component {
     }), this.fetchShowInfo(query)
     )
   }
-
-
-    // handlePortfolioChange = (id) => {
-  //   this.setState({
-  //     currentPortfolio: id
-  //   })
-  // }
 
   //Functions for ProfileContainer
   iterate = () => {
@@ -231,6 +221,15 @@ class App extends Component {
     })
   }
 
+  setCurrentPortfolio = (portfolio) => {
+    this.setState({
+      currentPortfolio: portfolio,
+      stockCardData: [],
+      stockGraphData: [],
+      portfolioStocks: []
+    }, () => this.filterStocks())
+  }
+
   //Add Daily Main Top News Stories to Portfolio Page
   fetchTopNews = () => {
     fetch(`https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${newsAPIKEY}`)
@@ -259,14 +258,16 @@ class App extends Component {
 
         <Route exact path="/" component={()=> <LoginContainer handleSubmit={this.handleLoginSubmit}/>}/>
         <Route exact path="/profile" component={()=> {
-          return this.state.currentUser && <ProfileContainer 
+          return this.state.currentUser && <ProfileContainer
+            setCurrentPortfolio={this.setCurrentPortfolio}
             handleSearch={this.handleSearch}
             username={this.state.currentUser.username} 
-            portfolioName={this.state.currentPortfolio.name}
+            currentPortfolio={this.state.currentPortfolio}
             portfolioStocks={this.state.portfolioStocks}
             stockCardData={this.state.stockCardData}
             stockGraphData={this.state.stockGraphData}
             topBusNews={this.state.topBusNews}
+            portfolioOptions={this.state.currentUser.portfolios}
           /> 
            } 
            } /> 
