@@ -18,16 +18,7 @@ class StockCardContainer extends Component {
             Authorization :`Bearer ${localStorage.getItem("token")}`,
           }
         })
-        .then(this.updatePortfolioStocks(id))
-      }
-
-    updatePortfolioStocks = (id) => {
-        let newArray = this.state.data.filter(stock => {
-          return stock.id !== id
-        })
-        this.setState({
-          data: newArray
-        })
+        .then(this.props.editPortfolioStocks(id))
       }
 
     createCards = () => {

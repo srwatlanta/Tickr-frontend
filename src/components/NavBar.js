@@ -47,7 +47,7 @@ class NavBar extends Component {
                             <Grid container align="center">
                                 <IconButton edge="start"  aria-label="menu">
                                     {this.props.user &&
-                                    <UserBar user={this.props.user} logOut={this.props.logOut}/> 
+                                    <UserBar removeSearch={this.props.removeSearch} user={this.props.user} logOut={this.props.logOut}/> 
                                     }    
                                 </IconButton>
                                 <Typography variant="h3" justify="center">

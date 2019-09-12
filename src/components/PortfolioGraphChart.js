@@ -61,12 +61,16 @@ const formatStockInfoForGraph = (allStocks) => {
     return firstTenObj
   }
   
-const PortfolioGraphChart = (props) => {
-  const classes = useStyles();
-  let portStocks = []
-  props.stocks.forEach(stockData => portStocks.push(stockData))
-  let graphData = formatStockInfoForGraph(portStocks)
+  const chartMore = (array) => {
+    let portStocks = []
+    array.forEach(stockData => portStocks.push(stockData))
+    return formatStockInfoForGraph(portStocks)
+  }
 
+  const PortfolioGraphChart = (props) => {
+    const classes = useStyles();
+    const graphData = props.stocks.length > 1 ? chartMore(props.stocks) : props.stocks[0]
+  
   return (
     
       <Paper classdate={classes.root}>
