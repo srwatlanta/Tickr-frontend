@@ -7,7 +7,7 @@ import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   } from 'recharts';
 import SelectPortfolio from './SelectPortfolio';
-
+import AddPortfolio from './AddPortfolio';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -75,10 +75,10 @@ const PortfolioGraphChart = (props) => {
         </Typography>
         <Typography variant="h4" component="h3" align="center">
             Portfolio: {props.portfolioName}
+            <AddPortfolio handleAddPortfolio={props.handleAddPortfolio}/>
         </Typography>
-        <Typography component="p">
-            
-        </Typography>
+        
+        
         <LineChart width={1300} height={600} data={graphData}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
