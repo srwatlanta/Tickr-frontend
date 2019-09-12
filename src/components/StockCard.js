@@ -85,13 +85,15 @@ const StockCard = (props) => {
                   {stockCard.icon}
                 </Typography>
 
-                <CardActions>
+                <CardActions >
+                  <Container align="center">
                     <Button onClick={() => handleClick(props.stock.id)} color="primary">
                     Remove
                     </Button>
                     <Button onClick={() => props.handleSearch(props.stock.ticker)} color="primary" >
                       Show More
                     </Button>
+                    </Container>
                 </CardActions>
                 <Container className={classes[stockCard.color]}>
                   <br></br>

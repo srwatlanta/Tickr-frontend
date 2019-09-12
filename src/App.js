@@ -359,7 +359,11 @@ class App extends Component {
   render() {
     return (
       <Router >
-        <NavBar removeSearch={this.removeSearch} user={this.state.currentUser} logOut={this.logOut} handleSearch={this.handleSearch}/>
+        <NavBar removeSearch={this.removeSearch} 
+        user={this.state.currentUser} 
+        logOut={this.logOut} 
+        handleSearch={this.handleSearch}
+        />
           {localStorage.getItem("token") ?
           <React.Fragment>
             {this.state.selectedStockInfo ?  
