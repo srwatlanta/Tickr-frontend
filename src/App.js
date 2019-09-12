@@ -29,7 +29,8 @@ class App extends Component {
       selectedStockInfo: null,
       stockCardData: [],
       stockGraphData: [],
-      topBusNews: []
+      topBusNews: [],
+      newPortfolio: null
     }
   }
 
@@ -240,6 +241,28 @@ class App extends Component {
   }
 
 
+  //Add a new Portfolio
+  addPortfolio = (name) => {
+    let userID = this.state.currentUser.id
+    console.log(this.state.currentUser)
+    fetch("http://localhost:3000/portfolios", {
+      method:"POST",
+      headers: {
+        Authorization :`Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+        'Accepts': 'application/json'
+      }, 
+      body: JSON.stringify({
+        name: name,
+        user_id: userID
+      })
+    })
+  }
+
+  handleAddPortfolio = (data) => {
+    this.addPortfolio(data)
+  }
+
   render() {
     return (
       <Router >
@@ -268,6 +291,7 @@ class App extends Component {
             stockGraphData={this.state.stockGraphData}
             topBusNews={this.state.topBusNews}
             portfolioOptions={this.state.currentUser.portfolios}
+            handleAddPortfolio={this.handleAddPortfolio}
           /> 
            } 
            } /> 

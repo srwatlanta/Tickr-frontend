@@ -55,6 +55,7 @@ class ProfileContainer extends Component {
                                     stockTickerData={this.props.stockCardData} 
                                     portfolioOptions={this.props.portfolioOptions}
                                     setCurrentPortfolio={this.props.setCurrentPortfolio}
+                                    handleAddPortfolio={this.props.handleAddPortfolio}
                                 />
                             </Paper>
                         </Grid>
