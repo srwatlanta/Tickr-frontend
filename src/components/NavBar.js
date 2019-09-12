@@ -7,14 +7,16 @@ import UserBar from './UserBar'
 import { TextField, Fab } from '@material-ui/core'
 import SearchTwoToneIcon from '@material-ui/icons/SearchTwoTone'
 import Grid from '@material-ui/core/Grid'
+import FilledInput from '@material-ui/core/FilledInput';
+
 
 const styles = {
     bar: {
         backgroundColor: '#fb8c00',
     },
     button: {
-        marginLeft: "7%",
-        marginTop: "4%",
+        marginLeft: "4%",
+        marginTop: "5%",
         backgroundColor: "#bdbdbd"
     }
 }
@@ -29,13 +31,16 @@ class NavBar extends Component {
 
     handleChange = (event) => {
         this.setState({
-            [event.target.name]: event.target.value.toUpperCase()
+            [event.target.name]: event.target.value
         })
     }
 
     handleSearch = (event) => {
         event.preventDefault()
-        this.props.handleSearch(this.state.search)
+        this.props.handleSearch(this.state.search.toUpperCase())
+        this.setState({
+            search: ""
+        })
     }
 
     render() {
@@ -62,17 +67,16 @@ class NavBar extends Component {
                         </Grid>
                         <Grid item xs={4}>
                             <form>   
-                                <TextField
-                                    id="outlined-email-input"
-                                    label="search"
-                                    type="search"
-                                    name="search"
-                                    autoComplete="search"
-                                    margin="normal"
-                                    variant="outlined"
-                                    onChange={this.handleChange}/
-                                >
-                                <Fab aria-label="add" onClick={this.handleSearch} style={styles.button}>
+                            <TextField
+                                id="outlined-search"
+                                label="Search"
+                                margin="normal"
+                                variant="outlined"
+                                name="search"
+                                value={this.state.search}
+                                onChange={this.handleChange}
+                                />
+                                <Fab aria-label="add" onClick={this.handleSearch} style={styles.button} size="small">
                                     <SearchTwoToneIcon />
                                 </Fab>
                             </form>

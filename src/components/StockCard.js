@@ -6,6 +6,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import { Container } from '@material-ui/core';
 
 
 
@@ -27,7 +30,16 @@ const useStyles = makeStyles({
     pos: {
       marginBottom: 12,
     },
+    green: {
+      backgroundColor: 'green'
+    },
+    red: {
+      backgroundColor: 'red'
+    }
 });
+
+
+
 
 
 const StockCard = (props) => {
@@ -35,21 +47,32 @@ const StockCard = (props) => {
     const capitalize = (s) => {
         if (typeof s !== 'string') return ''
         return s.charAt(0).toUpperCase() + s.slice(1)
-      }    
+      }
+      
+    const card = {}
 
     const calculateChange = () => {
       let change = Number(Math.round((props.stock.todayPrice - props.stock.yesterdayPrice) + 'e2') + 'e-2')
       let percent = Number(Math.round(((props.stock.todayPrice / props.stock.yesterdayPrice) - 1) + 'e2') + 'e-2')
-      return change > 0 ? `+${change} (${percent}) %` : `${change} (${percent}) %`
+      return change > 0 ? (
+        card.string = `+${change} (${percent}) %`,
+        card.icon = <ArrowUpwardIcon /> ,
+        card.color = 'green'
+      )
+        : (
+        card.string =`${change} (${percent}) %`,
+        card.icon = <ArrowDownwardIcon /> ,
+        card.color = 'red'
+        )
     }
 
     const handleClick = (id) => {
       props.deleteStockFetch(id)
     }
-
-
+    
     return (
-        <Card className={classes.card}>
+      <Card className={classes.card}>
+      {calculateChange()}
             <CardContent>
                 <Typography className={classes.title} color="textPrimary" component="h3" align="center">
                     {props.stock.ticker.toUpperCase()}
@@ -57,22 +80,26 @@ const StockCard = (props) => {
                 <Typography align="center" variant="h4">
                     ${props.stock.todayPrice}
                 </Typography>
-                <Typography color="green" align="center" variant="h5">
-                    {calculateChange()}
+                <Typography align="center" variant="h5">
+                  {card.string}
+                  {card.icon}
                 </Typography>
 
                 <CardActions>
-                    <Button onClick={() => handleClick(props.stock.id)} size="small" color="primary">
+                    <Button onClick={() => handleClick(props.stock.id)} color="primary">
                     Remove
                     </Button>
-                    <Button onClick={() => props.handleSearch(props.stock.ticker)} >
+                    <Button onClick={() => props.handleSearch(props.stock.ticker)} color="primary" >
                       Show More
                     </Button>
                 </CardActions>
+                <Container className={classes[card.color]}>
+                  <br></br>
+                </Container>
             </CardContent>
         </Card>
     );
-    
 }
+
 
 export default StockCard;

@@ -14,8 +14,7 @@ const styles = {
     },
     newsBox:{
         marginTop: "2%",
-        maxWidth: "650px",
-        
+        maxWidth: "85%"
     },
     graphBox:{
         marginTop: "5%",
@@ -24,7 +23,7 @@ const styles = {
     stockBox:{
         marginTop:"2%",
         marginLeft:"8%",
-        maxWidth: "650px"
+        maxWidth: "85%"
        
     },
     header:{
@@ -123,7 +122,7 @@ class ProfileContainer extends Component {
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={6} xl={6}>
                     <Grid container justify='center' style={styles.stockBox}>
                         <Paper style={styles.header}>
                             <Typography align="center" gutterBottom variant="h5">
@@ -140,7 +139,7 @@ class ProfileContainer extends Component {
                     </Grid>
                 </Grid>
 
-                <Grid item xs={6} >
+                <Grid item xs={6} xl={6}>
                     <Grid container justify='center'  style={styles.newsBox}>
                         <Paper style={styles.header}>
                             <Typography align='center' gutterBottom variant="h5">

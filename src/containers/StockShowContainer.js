@@ -25,13 +25,24 @@ const styles = {
 }
 
 class StockShowContainer extends Component {
+
+    alreadyExists = () =>{
+        let x = undefined
+        this.props.portfolioStocks.forEach(stock =>{
+            if(stock.ticker === this.props.stock.ticker){
+                return x = stock.id
+            }}
+        )
+        return x
+    }
+
     render() {
         return (
             <div style={styles.bar}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} style={styles.graph}>
                         <Grid container justify="center">
-                            <GraphChart stockInfo={this.props.stockInfo} stock={this.props.stock} addStockToPortfolio={this.props.addStockToPortfolio}/>
+                            <GraphChart deleteStockFetch={this.props.deleteStockFetch} alreadyExists={this.alreadyExists} stockInfo={this.props.stockInfo} stock={this.props.stock} addStockToPortfolio={this.props.addStockToPortfolio}/>
                         </Grid>
                     </Grid>
                     <Grid item xs={12}>

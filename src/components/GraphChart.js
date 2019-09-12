@@ -5,6 +5,8 @@ import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Add'
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import RemoveIcon from '@material-ui/icons/Remove';
+
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   } from 'recharts';
@@ -30,18 +32,30 @@ const styles = {
 const GraphChart = (props) => {
   const classes = useStyles();
 
-  const handleClick = () => {
+  const handlePlusClick = () => {
     props.addStockToPortfolio()
-    // props.removeSearch()
   }
+
+  const handleMinusClick = (id) => {
+    props.deleteStockFetch(id)
+  }
+
   return (
     <div>
       <Paper classdate={classes.root}>
-        <Typography variant="h5" component="h3">
+        <Typography variant="h3" component="h3">
           {props.stock.ticker}
-          <Fab style={styles.button} onClick={handleClick} aria-label="add" size="small">
+          {props.alreadyExists() === undefined ? 
+          <Fab style={styles.button} onClick={() => handlePlusClick()} aria-label="add" size="small">
               <AddIcon />
           </Fab>
+          :
+          <Fab style={styles.button} onClick={() => handleMinusClick(props.alreadyExists())} aria-label="add" size="small">
+              <RemoveIcon />
+          </Fab>
+          }         
+
+
         </Typography>
         <Typography variant="h5" component="h3">
           {"$" + Number(props.stock.todayPrice)}
