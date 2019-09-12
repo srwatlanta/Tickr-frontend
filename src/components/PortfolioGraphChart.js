@@ -74,7 +74,11 @@ const PortfolioGraphChart = (props) => {
             Welcome, {props.username}
         </Typography>
         <Typography variant="h4" component="h3" align="center">
-            Portfolio: {props.portfolioName}
+            <SelectPortfolio 
+              currentPortfolio={props.currentPortfolio} 
+              portfolios={props.portfolioOptions}
+              setCurrentPortfolio={props.setCurrentPortfolio}
+            />
             <AddPortfolio handleAddPortfolio={props.handleAddPortfolio}/>
         </Typography>
         
