@@ -170,10 +170,16 @@ class App extends Component {
 
   //Functions for ProfileContainer
   iterate = () => {
+    this.setState({
+      stockCardData: [],
+      stockGraphData: []
+    }, () => {
     this.state.portfolioStocks.forEach(stock => {
         this.fetchPortfolioStock(stock)
+      })
     })
   }
+  
 
   fetchPortfolioStock = (stock) => {
       fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stock.ticker}&apikey=${stockAPIKEY}`)
@@ -275,6 +281,42 @@ class App extends Component {
     .then(this.fetchProfile())
   }
 
+  editPortfolioStocks = (id) => {
+    let newArr = this.state.portfolioStocks.filter(stock => {
+      return stock.id !== id
+      })
+    this.setState({
+      portfolioStocks: newArr
+    })
+  }
+
+
+
+  //Create a New User
+  createUser = (state) => {
+    fetch("http://localhost:3000/users", {
+        method:"POST",
+        headers: {
+            "Content-Type": "application/json",
+            'Accepts': 'application/json'
+        }, 
+        body: JSON.stringify({
+          user:{
+            username: state.username,
+            password: state.password,
+            email: state.email,
+            name: state.name,
+            image_url: state.image_url,
+            member_since: state.member_since
+          }
+        })
+    })
+    .then(res => res.json())
+    .then(user => this.setState({
+      currentUser: user.user,
+      currentPortfolio: user.user.portfolios[0] 
+    }, localStorage.setItem("token", user.jwt)))
+  }
 
   render() {
     return (
@@ -292,7 +334,7 @@ class App extends Component {
             <Redirect to="/"/>
           }
 
-        <Route exact path="/" component={()=> <LoginContainer handleSubmit={this.handleLoginSubmit}/>}/>
+        <Route exact path="/" component={()=> <LoginContainer handleSubmit={this.handleLoginSubmit} createUser={this.createUser}/>}/>
         <Route exact path="/profile" component={()=> {
           return this.state.currentUser && <ProfileContainer
             setCurrentPortfolio={this.setCurrentPortfolio}
@@ -305,6 +347,7 @@ class App extends Component {
             topBusNews={this.state.topBusNews}
             portfolioOptions={this.state.currentUser.portfolios}
             handleAddPortfolio={this.addPortfolio}
+            editPortfolioStocks={this.editPortfolioStocks}
           /> 
            } 
            } /> 

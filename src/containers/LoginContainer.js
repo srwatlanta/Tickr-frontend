@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-
+import NewUser from '../components/NewUser';
 
 
 function Copyright() {
@@ -62,7 +62,6 @@ const useStyles = makeStyles(theme => ({
 const LoginContainer = (props) => {
     const classes = useStyles();
 
-
     return (
         <Grid container component="main" className={classes.root}>
           <CssBaseline />
@@ -82,9 +81,7 @@ const LoginContainer = (props) => {
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Link href="#" variant="body2">
-                      {"Don't have an account? Sign Up"}
-                    </Link>
+                    <NewUser createUser={props.createUser}/>
                   </Grid>
                 </Grid>
                 <Box mt={5} className={classes.box}>

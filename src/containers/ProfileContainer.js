@@ -69,6 +69,7 @@ class ProfileContainer extends Component {
                                 Your Portfolio
                             </Typography>
                             <StockCardContainer 
+                                editPortfolioStocks={this.props.editPortfolioStocks}
                                 deleteStockFetch={this.props.deleteStockFetch} 
                                 handleSearch={this.props.handleSearch} 
                                 stockCardData={this.props.stockCardData}
