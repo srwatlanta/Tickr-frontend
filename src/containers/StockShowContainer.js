@@ -25,8 +25,6 @@ const styles = {
 }
 
 class StockShowContainer extends Component {
-    
-
     render() {
         return (
             <div style={styles.bar}>

@@ -82,6 +82,7 @@ const formatStockInfoForGraph = (allStocks) => {
               currentPortfolio={props.currentPortfolio} 
               portfolios={props.portfolioOptions}
               setCurrentPortfolio={props.setCurrentPortfolio}
+              deletePortfolio={props.deletePortfolio}
             />
             <AddPortfolio handleAddPortfolio={props.handleAddPortfolio}/>
         </Typography>

@@ -29,12 +29,17 @@ const styles = {
 
 const GraphChart = (props) => {
   const classes = useStyles();
+
+  const handleClick = () => {
+    props.addStockToPortfolio()
+    // props.removeSearch()
+  }
   return (
     <div>
       <Paper classdate={classes.root}>
         <Typography variant="h5" component="h3">
           {props.stock.ticker}
-          <Fab style={styles.button} onClick={props.addStockToPortfolio} aria-label="add" size="small">
+          <Fab style={styles.button} onClick={handleClick} aria-label="add" size="small">
               <AddIcon />
           </Fab>
         </Typography>

@@ -49,6 +49,7 @@ class App extends Component {
       currentUser: user.user,
       currentPortfolio: user.user.portfolios[0]
     }, localStorage.setItem("token", user.jwt)))
+    .catch(error => alert(error))
   }
 
   fetchProfile = () => {
@@ -94,13 +95,14 @@ class App extends Component {
     })
   }
 
+
   filterStocks = () => {
     let filteredStocks = this.state.currentUser.stocks.filter(stock => {
       return stock.portfolio_id === this.state.currentPortfolio.id
     })
     this.setState({
       portfolioStocks: filteredStocks
-    }, () => this.iterate())
+    })
   }
 
   componentDidMount(){
@@ -121,12 +123,25 @@ class App extends Component {
     }))
   )}
 
+  badSearch = () => {
+    alert("Not a Valid Ticker!")
+    this.setState({
+      selectedStock: {
+        ticker: null,
+        todayPrice: null,
+        yesterdayPrice: null,
+        news: []
+      },
+      selectedStockInfo: null
+    })
+  }
+
   //Fetch Stock Data
   fetchSearchStockData = (stock) => {
     fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stock}&apikey=${stockAPIKEY}`)
     .then(res => res.json())
     .then(data => {
-      data['Error Message'] ? alert("Not a Valid Ticker!") : this.setSearchStockData(data)
+      data['Error Message'] ? this.badSearch() : this.setSearchStockData(data)
     })
   }
 
@@ -169,57 +184,9 @@ class App extends Component {
   }
 
   //Functions for ProfileContainer
-  iterate = () => {
-    this.setState({
-      stockCardData: [],
-      stockGraphData: []
-    }, () => {
-    this.state.portfolioStocks.forEach(stock => {
-        this.fetchPortfolioStock(stock)
-      })
-    })
-  }
   
 
-  fetchPortfolioStock = (stock) => {
-      fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stock.ticker}&apikey=${stockAPIKEY}`)
-      .then(res => res.json())
-      .then(data => {
-          this.setStockCardData(data, stock.id)
-          this.setStockGraphData(data)
-      })
-    }
-
-  setStockCardData = (data, id) => {
-    let ticker = data["Meta Data"]['2. Symbol']
-    let prices = data["Time Series (Daily)"]
-    let price = Object.entries(prices).slice(0,2)
-    let price1 = Number(price[0][1]["4. close"])
-    let price2 = Number(price[1][1]["4. close"])
-    let obj = {}
-    obj.id = id
-    obj.ticker = ticker
-    obj.todayPrice = price1
-    obj.yesterdayPrice = price2
-    this.setState({
-        stockCardData: [...this.state.stockCardData, obj]
-    })
-  }
-
-  setStockGraphData = (data) => {
-      let ticker = data["Meta Data"]['2. Symbol']
-      let prices = data["Time Series (Daily)"]
-      let tenEntries = Object.entries(prices).slice(0, 10)
-      let dataArr = []
-      tenEntries.forEach(entry => {
-      let obj = {"date": entry[0], 
-                   [ticker]: Number(entry[1]["4. close"])}
-        dataArr.unshift(obj)
-      })
-      this.setState({
-          stockGraphData: [...this.state.stockGraphData, dataArr]
-      })
-  }
+  
 
   //Add Stock to Current Portfolio
   addStockToPortfolio = () => {
@@ -239,8 +206,15 @@ class App extends Component {
     })
     .then(res => res.json())
     .then(stock => this.setState({
-      portfolioStocks: [...this.state.portfolioStocks, stock.stock]
-    }),this.fetchProfile())
+      portfolioStocks: [...this.state.portfolioStocks, stock.stock],
+      selectedStock: {
+        ticker: null,
+        todayPrice: null,
+        yesterdayPrice: null,
+        news: []
+      },
+      selectedStockInfo: null
+    }))
   }
 
   setCurrentPortfolio = (portfolio) => {
@@ -261,6 +235,20 @@ class App extends Component {
     }))
   }
 
+  deletePortfolio = (id) => {
+    fetch("http://localhost:3000/portfolios/" + id, {
+      method: 'delete',
+      headers: {
+        Authorization :`Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+        'Accepts': 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(data => this.setState({
+      currentUser: data.user
+    }))
+  }
 
   //Add a new Portfolio
   addPortfolio = (name) => {
@@ -290,8 +278,6 @@ class App extends Component {
     })
   }
 
-
-
   //Create a New User
   createUser = (state) => {
     fetch("http://localhost:3000/users", {
@@ -319,6 +305,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state)
     return (
       <Router >
         <NavBar removeSearch={this.removeSearch} user={this.state.currentUser} logOut={this.logOut} handleSearch={this.handleSearch}/>
@@ -348,11 +335,13 @@ class App extends Component {
             portfolioOptions={this.state.currentUser.portfolios}
             handleAddPortfolio={this.addPortfolio}
             editPortfolioStocks={this.editPortfolioStocks}
+            deletePortfolio={this.deletePortfolio}
           /> 
            } 
            } /> 
         <Route exact path={`/stocks/${this.state.selectedStock.ticker}`} component={() => 
-          <StockShowContainer 
+          <StockShowContainer
+            removeSearch={this.removeSearch}
             stockInfo={this.state.selectedStockInfo} 
             stock={this.state.selectedStock}
             addStockToPortfolio={this.addStockToPortfolio}
