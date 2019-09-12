@@ -27,7 +27,7 @@ const AddPortfolio = (props)=> {
   let state
   
   return (
-    <div>
+    <React.Fragment>
       <IconButton variant="outlined" color="primary" onClick={handleClickOpen}>
         Add a Portfolio <AddRoundedIcon />
       </IconButton>
@@ -65,7 +65,7 @@ const AddPortfolio = (props)=> {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </React.Fragment>
   );
 }
 

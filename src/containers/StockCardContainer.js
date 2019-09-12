@@ -10,8 +10,8 @@ class StockCardContainer extends Component {
     createCards = () => {
         return this.props.stockCardData.map(stock => {
             return (
-            <Grid item xs={6} >
-                <Grid container spacing={2} justify="center">
+            <Grid item xs={4} >
+                <Grid container justify="center">
                         <StockCard key={`Stock card ${stock.id}`} deleteStockFetch={this.deleteStockFetch} stock={stock} handleSearch={this.props.handleSearch}/>  
                 </Grid>
             </Grid>
@@ -20,8 +20,8 @@ class StockCardContainer extends Component {
     
     render() {
         return (
-            <Paper style={{maxHeight: 500, overflow: 'auto', paddingTop: '3%'}}>
-                <Grid container spacing={5} >
+            <Paper style={{maxHeight: 500, overflow: 'auto', paddingTop: '3%', maxWidth: 1701}}>
+                <Grid container spacing={2} >
                     {this.createCards()}
                 </Grid>
             </Paper>

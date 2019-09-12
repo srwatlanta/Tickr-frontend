@@ -66,7 +66,7 @@ class NavBar extends Component {
                             </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                            <form>   
+                            <form id="search-form">   
                             <TextField
                                 id="outlined-search"
                                 label="Search"

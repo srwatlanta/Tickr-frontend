@@ -14,7 +14,7 @@ const styles = {
     },
     newsBox:{
         marginTop: "2%",
-        maxWidth: "85%"
+        maxWidth: "100%"
     },
     graphBox:{
         marginTop: "5%",
@@ -27,7 +27,11 @@ const styles = {
        
     },
     header:{
-        backgroundColor: '#f2ab38'
+        backgroundColor: '#f2ab38',
+    },
+    text:{
+        paddingLeft: "2%",
+        paddingTop:"0.5%"
     }
 
 }
@@ -106,8 +110,11 @@ class ProfileContainer extends Component {
             <Grid container style={styles.bar} spacing={2}>
                 <Grid item xs={12} xl={12}>
                     <Grid container justify='center' style={styles.graphBox}>
-                        <Grid item>
-                            <Paper>
+                        <Grid item xs={10}>
+                            <Paper style={styles.header}>
+                                <Typography align="left" gutterBottom variant="h5" style={styles.text}>
+                                    {this.props.username}
+                                </Typography>
                                 <PortfolioGraphChart 
                                     username={this.props.username} 
                                     currentPortfolio={this.props.currentPortfolio} 
@@ -122,10 +129,10 @@ class ProfileContainer extends Component {
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item xs={6} xl={6}>
+                <Grid item xs={12} xl={12}>
                     <Grid container justify='center' style={styles.stockBox}>
                         <Paper style={styles.header}>
-                            <Typography align="center" gutterBottom variant="h5">
+                            <Typography align="left" gutterBottom variant="h5" style={styles.text}>
                                 Your Portfolio
                             </Typography>
                             <StockCardContainer 
@@ -139,9 +146,12 @@ class ProfileContainer extends Component {
                     </Grid>
                 </Grid>
 
-                <Grid item xs={6} xl={6}>
+                <Grid item xs={12} xl={12} align="center">
                     <Grid container justify='center'  style={styles.newsBox}>
                         <Paper >
+                            <Typography align='left' gutterBottom variant="h5" style={styles.text}>
+                                Top Business News
+                            </Typography>
                             <StockNews news={this.props.topBusNews}/>
                         </Paper>
                     </Grid>
