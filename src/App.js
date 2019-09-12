@@ -263,6 +263,34 @@ class App extends Component {
     this.addPortfolio(data)
   }
 
+
+  //Create a New User
+  createUser = (state) => {
+    console.log(state)
+    fetch("http://localhost:3000/users", {
+        method:"POST",
+        headers: {
+            "Content-Type": "application/json",
+            'Accepts': 'application/json'
+        }, 
+        body: JSON.stringify({
+          user:{
+            username: state.username,
+            password: state.password,
+            email: state.email,
+            name: state.name,
+            image_url: state.image_url,
+            member_since: state.member_since
+          }
+        })
+    })
+    .then(res => res.json())
+    .then(user => this.setState({
+      currentUser: user.user,
+      currentPortfolio: user.user.portfolios[0] 
+    }, localStorage.setItem("token", user.jwt)))
+  }
+
   render() {
     return (
       <Router >
@@ -279,7 +307,7 @@ class App extends Component {
             <Redirect to="/"/>
           }
 
-        <Route exact path="/" component={()=> <LoginContainer handleSubmit={this.handleLoginSubmit}/>}/>
+        <Route exact path="/" component={()=> <LoginContainer handleSubmit={this.handleLoginSubmit} createUser={this.createUser}/>}/>
         <Route exact path="/profile" component={()=> {
           return this.state.currentUser && <ProfileContainer
             setCurrentPortfolio={this.setCurrentPortfolio}
