@@ -186,7 +186,7 @@ class App extends Component {
 
   //News API call and sets the Selected Stock with its news
   fetchNewsData = (query) => {
-    fetch('https://newsapi.org/v2/everything?q=' + query + '&from=2019-09-10&sortBy=publishedAt&apiKey=' + newsAPIKEY)
+    fetch('https://newsapi.org/v2/everything?q=' + query + '&from=2019-09-10&sortBy=publishedAt&language=en&apiKey=' + newsAPIKEY)
     .then(res => res.json())
     .then(news => this.setState(prevState => ({
       selectedStock: {...prevState.selectedStock, news: news.articles}

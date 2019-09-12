@@ -10,6 +10,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import NewUser from '../components/NewUser';
+import { Container } from '@material-ui/core';
 
 
 function Copyright() {
@@ -44,7 +45,7 @@ const useStyles = makeStyles(theme => ({
     },
     avatar: {
       margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.primary.main,
     },
     form: {
       width: '100%', // Fix IE 11 issue.
@@ -75,14 +76,22 @@ const LoginContainer = (props) => {
                 <LoginForm handleSubmit={props.handleSubmit}/>
                 
                 <Grid container className={classes.box}>
-                  <Grid item xs>
-                    <Link href="#" variant="body2">
-                      Forgot password?
-                    </Link>
+                  <Grid item xs={6} align="center" justify="center">
+                  
+                     <Container>
+                      <Link href="#" variant="body2">
+                        <Typography>
+                        Forgot password?
+                        </Typography>
+                      </Link>
+                    </Container>
+                    
                   </Grid>
-                  <Grid item>
-                    <NewUser createUser={props.createUser}/>
+                  <Grid item xs={6} align="top" >
+                    <NewUser createUser={props.createUser} id="newUserLink"/>
+                    
                   </Grid>
+                  
                 </Grid>
                 <Box mt={5} className={classes.box}>
                   <Copyright />

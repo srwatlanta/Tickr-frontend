@@ -49,22 +49,22 @@ const StockCard = (props) => {
         return s.charAt(0).toUpperCase() + s.slice(1)
       }
       
-    const card = {}
+    const stockCard = {}
 
-    const calculateChange = () => {
+    const calculateChange = (() => {
       let change = Number(Math.round((props.stock.todayPrice - props.stock.yesterdayPrice) + 'e2') + 'e-2')
       let percent = Number(Math.round(((props.stock.todayPrice / props.stock.yesterdayPrice) - 1) + 'e2') + 'e-2')
       return change > 0 ? (
-        card.string = `+${change} (${percent}) %`,
-        card.icon = <ArrowUpwardIcon /> ,
-        card.color = 'green'
+       stockCard.string = `+${change} (${percent}) %`,
+       stockCard.color = 'green',
+       stockCard.icon = <ArrowUpwardIcon /> 
       )
         : (
-        card.string =`${change} (${percent}) %`,
-        card.icon = <ArrowDownwardIcon /> ,
-        card.color = 'red'
+       stockCard.string =`${change} (${percent}) %`,
+       stockCard.color = 'red',
+       stockCard.icon = <ArrowDownwardIcon /> 
         )
-    }
+    })()
 
     const handleClick = (id) => {
       props.deleteStockFetch(id)
@@ -72,7 +72,7 @@ const StockCard = (props) => {
     
     return (
       <Card className={classes.card}>
-      {calculateChange()}
+      {/* {calculateChange()} */}
             <CardContent>
                 <Typography className={classes.title} color="textPrimary" component="h3" align="center">
                     {props.stock.ticker.toUpperCase()}
@@ -80,9 +80,9 @@ const StockCard = (props) => {
                 <Typography align="center" variant="h4">
                     ${props.stock.todayPrice}
                 </Typography>
-                <Typography align="center" variant="h5">
-                  {card.string}
-                  {card.icon}
+                <Typography align="center" variant="h6">
+                  {stockCard.string}
+                  {stockCard.icon}
                 </Typography>
 
                 <CardActions>
@@ -93,7 +93,7 @@ const StockCard = (props) => {
                       Show More
                     </Button>
                 </CardActions>
-                <Container className={classes[card.color]}>
+                <Container className={classes[stockCard.color]}>
                   <br></br>
                 </Container>
             </CardContent>

@@ -60,7 +60,7 @@ const GraphChart = (props) => {
         <Typography variant="h5" component="h3">
           {"$" + Number(props.stock.todayPrice)}
         </Typography>
-        <LineChart width={730} height={400} data={props.stockInfo}
+        <LineChart width={1300} height={600} data={props.stockInfo}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="date" />

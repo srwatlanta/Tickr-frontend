@@ -141,10 +141,7 @@ class ProfileContainer extends Component {
 
                 <Grid item xs={6} xl={6}>
                     <Grid container justify='center'  style={styles.newsBox}>
-                        <Paper style={styles.header}>
-                            <Typography align='center' gutterBottom variant="h5">
-                                Top Business News
-                            </Typography>
+                        <Paper >
                             <StockNews news={this.props.topBusNews}/>
                         </Paper>
                     </Grid>

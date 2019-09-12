@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button'
-
+import Typography from '@material-ui/core/Typography'
 import React from 'react'
 
 
@@ -31,9 +31,11 @@ const NewUser = (props) => {
     }
     
         return (
-        <div>
+        <React.Fragment>
             <IconButton variant="outlined" color="primary" onClick={handleClickOpen}>
-                Create a New Account
+                <Typography>
+                    Create Account
+                </Typography>
             </IconButton>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Add Portfolio</DialogTitle>
@@ -105,7 +107,7 @@ const NewUser = (props) => {
                 </Button>
                 </DialogActions>
             </Dialog>
-            </div>
+            </React.Fragment>
     )
     
 }
