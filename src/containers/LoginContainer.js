@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import NewUser from '../components/NewUser';
 import { Container } from '@material-ui/core';
-
+import ForgotPassword from '../components/ForgotPassword'
 
 function Copyright() {
     return (
@@ -77,17 +77,9 @@ const LoginContainer = (props) => {
                 
                 <Grid container className={classes.box}>
                   <Grid item xs={6} align="center" justify="center">
-                  
-                     <Container>
-                      <Link href="#" variant="body2">
-                        <Typography>
-                        Forgot password?
-                        </Typography>
-                      </Link>
-                    </Container>
-                    
+                      <ForgotPassword />
                   </Grid>
-                  <Grid item xs={6} align="top" >
+                  <Grid item xs={6} align="center" justify="center" >
                     <NewUser createUser={props.createUser} id="newUserLink"/>
                     
                   </Grid>

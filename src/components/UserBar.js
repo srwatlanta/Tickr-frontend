@@ -56,7 +56,7 @@ export default function UserBar(props) {
         Authorization :`Bearer ${localStorage.getItem("token")}`,
       }
     })
-    .then(localStorage.clear())
+    .then(props.logOut)
   }
   const sideList = side => (
     <div
