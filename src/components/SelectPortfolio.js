@@ -13,21 +13,21 @@ const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
-      },
-      formControl: {
-        margin: "8px",
-        minWidth: 120,
-      },
-      selectEmpty: {
-        marginTop: "16px",
-      },
-      text: {
-          fontSize: 16,
-          marginRight: "12px"
-      },
-      chip: {
-          borderColor: '#ffcc80',
-      }
+    },
+    formControl: {
+    margin: "8px",
+    minWidth: 120,
+    },
+    selectEmpty: {
+    marginTop: "16px",
+    },
+    text: {
+        fontSize: "25px",
+        marginRight: "12px"
+    },
+    chip: {
+        borderColor: '#ffcc80',
+    }
   }));
 
   
@@ -47,6 +47,7 @@ const SelectPortfolio = props => {
                             className={classes.chip}
                             onDelete={() => handleDelete(portfolio.id)}
                             variant="outlined"
+                            size='medium'
                         />                    
                     </MenuItem>
         })
@@ -64,8 +65,9 @@ const SelectPortfolio = props => {
                         name="portfolio"
                         displayEmpty
                         className={classes.selectEmpty}
+                        
                     >
-                        <MenuItem value={props.currentPortfolio.name} disabled>
+                        <MenuItem style={classes.menuItem} value={props.currentPortfolio.name} disabled>
                             {props.currentPortfolio.name}
                         </MenuItem>
                             {createInputs()}

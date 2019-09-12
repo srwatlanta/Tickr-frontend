@@ -33,10 +33,8 @@ class StockNews extends Component {
         // console.log(this.props)
         return (
             <Paper className={styles.header}>
-                <Typography align='center' gutterBottom variant="h5">
-                    Top Business News
-                </Typography>
-                <Paper style={{maxHeight: 500, maxWidth:1500,  overflow: 'auto'}}>
+                
+                <Paper style={{maxHeight: 500, maxWidth:1700,  overflow: 'auto'}}>
                     <List>
                         {this.renderNews()}
                     </List>
