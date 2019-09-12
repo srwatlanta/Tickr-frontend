@@ -6,7 +6,6 @@ import PortfolioGraphChart from '../components/PortfolioGraphChart';
 import StockCardContainer from './StockCardContainer'
 import StockNews from '../components/StockNews'
 import 'typeface-roboto';
-import Container from '@material-ui/core/Container'
 
 const styles = {
     bar: {
@@ -49,7 +48,15 @@ class ProfileContainer extends Component {
                     <Grid container justify='center' style={styles.graphBox}>
                         <Grid item>
                             <Paper>
-                                <PortfolioGraphChart username={this.props.username} portfolioName={this.props.portfolioName} stocks={this.props.stockGraphData} stockTickerData={this.props.stockCardData} handleAddPortfolio={this.props.handleAddPortfolio}/>
+                                <PortfolioGraphChart 
+                                    username={this.props.username} 
+                                    currentPortfolio={this.props.currentPortfolio} 
+                                    stocks={this.props.stockGraphData} 
+                                    stockTickerData={this.props.stockCardData} 
+                                    portfolioOptions={this.props.portfolioOptions}
+                                    setCurrentPortfolio={this.props.setCurrentPortfolio}
+                                    handleAddPortfolio={this.props.handleAddPortfolio}
+                                />
                             </Paper>
                         </Grid>
                     </Grid>
@@ -61,7 +68,11 @@ class ProfileContainer extends Component {
                             <Typography align="center" gutterBottom variant="h5">
                                 Your Portfolio
                             </Typography>
-                            <StockCardContainer deleteStockFetch={this.props.deleteStockFetch} handleSearch={this.props.handleSearch} stockCardData={this.props.stockCardData}/>
+                            <StockCardContainer 
+                                deleteStockFetch={this.props.deleteStockFetch} 
+                                handleSearch={this.props.handleSearch} 
+                                stockCardData={this.props.stockCardData}
+                            />
                         </Paper>
                         
                     </Grid>
