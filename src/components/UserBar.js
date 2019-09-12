@@ -33,6 +33,9 @@ const useStyles = makeStyles({
     width: 200,
     height: 200,
   },
+  deleteButton: {
+    color:"red"
+  }
 });
 
 export default function UserBar(props) {
@@ -46,6 +49,15 @@ export default function UserBar(props) {
     setState({ ...state, [side]: open });
   };
 
+  const deleteAccount = (id) =>{
+    fetch(`http://localhost:3000/users/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization :`Bearer ${localStorage.getItem("token")}`,
+      }
+    })
+    .then(localStorage.clear())
+  }
   const sideList = side => (
     <div
       className={classes.list}
@@ -79,7 +91,10 @@ export default function UserBar(props) {
         <ListItem button onClick={props.logOut}>
             <ListItemIcon><ExitToAppIcon/></ListItemIcon>
             <ListItemText primary='Sign Out' />
-        </ListItem>      
+        </ListItem>  
+        <ListItem button onClick={() => deleteAccount(user.id)} id="deleteButton">
+          <ListItemText primary="Delete Account" className={classes.deleteButton}/>
+        </ListItem>    
       </List>
 
     </div>

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import StockNews from '../components/StockNews'
 import GraphChart from '../components/GraphChart'
-
 import Grid from '@material-ui/core/Grid';
+import { Paper } from '@material-ui/core';
 
 
   
@@ -21,24 +21,35 @@ const styles = {
     } ,
     graph:{
         marginTop: "2%"
-    } 
+    }
 }
 
 class StockShowContainer extends Component {
-    
+
+    alreadyExists = () =>{
+        let x = undefined
+        this.props.portfolioStocks.forEach(stock =>{
+            if(stock.ticker === this.props.stock.ticker){
+                return x = stock.id
+            }}
+        )
+        return x
+    }
 
     render() {
         return (
             <div style={styles.bar}>
                 <Grid container spacing={2}>
-                    <Grid item xs={12} style={styles.graph}>
+                    <Grid item xs={12} className={styles.graph}>
                         <Grid container justify="center">
-                            <GraphChart stockInfo={this.props.stockInfo} stock={this.props.stock} addStockToPortfolio={this.props.addStockToPortfolio}/>
+                            <GraphChart deleteStockFetch={this.props.deleteStockFetch} alreadyExists={this.alreadyExists} stockInfo={this.props.stockInfo} stock={this.props.stock} addStockToPortfolio={this.props.addStockToPortfolio}/>
                         </Grid>
-                    </Grid>
-                    <Grid item xs={12}>
+                    </Grid >
+                    <Grid item xs={12} style={styles.news}>
                         <Grid container justify="center">
-                            <StockNews news={this.props.stock.news}/>
+                            <Paper>
+                                <StockNews news={this.props.stock.news}/>
+                            </Paper>
                         </Grid>
                     </Grid>
                 </Grid>

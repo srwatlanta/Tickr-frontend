@@ -53,10 +53,14 @@ const AddPortfolio = (props)=> {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button form="addPortfolio" label="submit" onClick={() => {
+          <Button 
+            form="addPortfolio" 
+            label="submit" 
+            color="primary"
+            onClick={() => {
               props.handleAddPortfolio(state)
               handleClose()
-              }} color="primary">
+              }}>
             Submit
           </Button>
         </DialogActions>

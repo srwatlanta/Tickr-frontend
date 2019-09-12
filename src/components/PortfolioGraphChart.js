@@ -12,8 +12,12 @@ import AddPortfolio from './AddPortfolio';
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3, 2),
-    maxWidth: 1000,
+    maxWidth: '90%',
     backgroundColor: "#fff3e0",
+  },
+  makeNew: {
+    marginTop: '40px',
+    marginBottom: '40px'
   },
 }));
 
@@ -72,7 +76,7 @@ const formatStockInfoForGraph = (allStocks) => {
     const graphData = props.stocks.length > 1 ? chartMore(props.stocks) : props.stocks[0]
   
   return (
-    
+    props.stocks.length > 0 ?
       <Paper classdate={classes.root}>
         <Typography variant="h3" component="h3" align="center">
             Welcome, {props.username}
@@ -82,6 +86,7 @@ const formatStockInfoForGraph = (allStocks) => {
               currentPortfolio={props.currentPortfolio} 
               portfolios={props.portfolioOptions}
               setCurrentPortfolio={props.setCurrentPortfolio}
+              deletePortfolio={props.deletePortfolio}
             />
             <AddPortfolio handleAddPortfolio={props.handleAddPortfolio}/>
         </Typography>
@@ -97,6 +102,34 @@ const formatStockInfoForGraph = (allStocks) => {
             {makeLines(props.stockTickerData)}
         </LineChart>
       </Paper>
+      :
+      <Paper classdate={classes.root}>
+        <Typography variant="h3" component="h3" align="center">
+            Welcome, {props.username}
+        </Typography>
+        <Typography variant="h4" component="h3" align="center">
+            <SelectPortfolio 
+              currentPortfolio={props.currentPortfolio} 
+              portfolios={props.portfolioOptions}
+              setCurrentPortfolio={props.setCurrentPortfolio}
+              deletePortfolio={props.deletePortfolio}
+            />
+            <AddPortfolio handleAddPortfolio={props.handleAddPortfolio}/>
+        </Typography>
+        <LineChart width={1300} height={600}
+        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="date" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            {makeLines(props.stockTickerData)}
+        </LineChart>
+        <Typography className={classes.makeNew}variant="h4" component="h3" align="center">
+            Please Add Stocks To This Portfolio
+        </Typography>
+      </Paper>
+
     
   );
 }

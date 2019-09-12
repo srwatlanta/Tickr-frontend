@@ -14,8 +14,7 @@ const styles = {
     },
     newsBox:{
         marginTop: "2%",
-        maxWidth: "650px",
-        
+        maxWidth: "85%"
     },
     graphBox:{
         marginTop: "5%",
@@ -24,7 +23,7 @@ const styles = {
     stockBox:{
         marginTop:"2%",
         marginLeft:"8%",
-        maxWidth: "650px"
+        maxWidth: "85%"
        
     },
     header:{
@@ -33,12 +32,73 @@ const styles = {
 
 }
 
+const stockAPIKEY = '08G151DEIUICTJ2K'
+
+
 
 
 class ProfileContainer extends Component {
     constructor(){
         super()
-        
+        this.state = {
+            stockCardData: [],
+            stockGraphData: []
+        }
+    }
+
+    componentDidMount(){
+        this.iterate()
+    }
+
+    iterate = () => {
+        this.setState({
+          stockCardData: [],
+          stockGraphData: []
+        }, () => {
+        this.props.portfolioStocks.forEach(stock => {
+            this.fetchPortfolioStock(stock)
+          })
+        })
+      }
+
+      fetchPortfolioStock = (stock) => {
+        fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stock.ticker}&apikey=${stockAPIKEY}`)
+        .then(res => res.json())
+        .then(data => {
+            this.setStockCardData(data, stock.id)
+            this.setStockGraphData(data)
+        })
+      }
+  
+    setStockCardData = (data, id) => {
+      let ticker = data["Meta Data"]['2. Symbol']
+      let prices = data["Time Series (Daily)"]
+      let price = Object.entries(prices).slice(0,2)
+      let price1 = Number(price[0][1]["4. close"])
+      let price2 = Number(price[1][1]["4. close"])
+      let obj = {}
+      obj.id = id
+      obj.ticker = ticker
+      obj.todayPrice = price1
+      obj.yesterdayPrice = price2
+      this.setState({
+          stockCardData: [...this.state.stockCardData, obj]
+      })
+    }
+  
+    setStockGraphData = (data) => {
+        let ticker = data["Meta Data"]['2. Symbol']
+        let prices = data["Time Series (Daily)"]
+        let tenEntries = Object.entries(prices).slice(0, 10)
+        let dataArr = []
+        tenEntries.forEach(entry => {
+        let obj = {"date": entry[0], 
+                     [ticker]: Number(entry[1]["4. close"])}
+          dataArr.unshift(obj)
+        })
+        this.setState({
+            stockGraphData: [...this.state.stockGraphData, dataArr]
+        })
     }
     
     render() {
@@ -51,19 +111,19 @@ class ProfileContainer extends Component {
                                 <PortfolioGraphChart 
                                     username={this.props.username} 
                                     currentPortfolio={this.props.currentPortfolio} 
-                                    stocks={this.props.stockGraphData} 
-                                    stockTickerData={this.props.stockCardData} 
+                                    stocks={this.state.stockGraphData} 
+                                    stockTickerData={this.state.stockCardData} 
                                     portfolioOptions={this.props.portfolioOptions}
                                     setCurrentPortfolio={this.props.setCurrentPortfolio}
                                     handleAddPortfolio={this.props.handleAddPortfolio}
+                                    deletePortfolio={this.props.deletePortfolio}
                                 />
                             </Paper>
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={6} xl={6}>
                     <Grid container justify='center' style={styles.stockBox}>
-                        
                         <Paper style={styles.header}>
                             <Typography align="center" gutterBottom variant="h5">
                                 Your Portfolio
@@ -72,19 +132,16 @@ class ProfileContainer extends Component {
                                 editPortfolioStocks={this.props.editPortfolioStocks}
                                 deleteStockFetch={this.props.deleteStockFetch} 
                                 handleSearch={this.props.handleSearch} 
-                                stockCardData={this.props.stockCardData}
+                                stockCardData={this.state.stockCardData}
                             />
                         </Paper>
                         
                     </Grid>
                 </Grid>
 
-                <Grid item xs={6} >
+                <Grid item xs={6} xl={6}>
                     <Grid container justify='center'  style={styles.newsBox}>
-                        <Paper style={styles.header}>
-                            <Typography align='center' gutterBottom variant="h5">
-                                Top Business News
-                            </Typography>
+                        <Paper >
                             <StockNews news={this.props.topBusNews}/>
                         </Paper>
                     </Grid>
