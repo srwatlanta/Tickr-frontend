@@ -49,7 +49,7 @@ class ProfileContainer extends Component {
                     <Grid container justify='center' style={styles.graphBox}>
                         <Grid item>
                             <Paper>
-                                <PortfolioGraphChart username={this.props.username} portfolioName={this.props.portfolioName} stocks={this.props.stockGraphData} stockTickerData={this.props.stockCardData}/>
+                                <PortfolioGraphChart username={this.props.username} portfolioName={this.props.portfolioName} stocks={this.props.stockGraphData} stockTickerData={this.props.stockCardData} handleAddPortfolio={this.props.handleAddPortfolio}/>
                             </Paper>
                         </Grid>
                     </Grid>

@@ -14,7 +14,7 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-
+import Link from '@material-ui/core/Link'
 
 
 
@@ -72,7 +72,7 @@ export default function UserBar(props) {
       </List>
       <Divider/>
       <List>
-        < ListItem button>
+        < ListItem button component="a" href="http://localhost:3001/profile">
             <ListItemIcon><ShowChartIcon/></ListItemIcon>
             <ListItemText primary='Profile' />
         </ListItem>   
