@@ -4,6 +4,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import RemoveIcon from '@material-ui/icons/Remove';
+import Chip from '@material-ui/core/Chip';
+import ShowChartIcon from '@material-ui/icons/ShowChart';
+
 
 const styles = {
     root: {
@@ -17,6 +21,12 @@ const styles = {
     selectEmpty: {
       marginTop: "16px",
     },
+    button: {
+        backgroundColor: 'red',
+        marginLeft: '2%',
+        height: '22px',
+        width: '12px'
+    }
   };
   
 class SelectPortfolio extends Component {
@@ -27,11 +37,19 @@ class SelectPortfolio extends Component {
         }
     }
 
+    handleDelete = () => {
 
+    }
 
     createInputs = () => {
         return this.props.portfolios.map(portfolio => {
-            return <MenuItem value={portfolio}>{portfolio.name}</MenuItem>
+            return <MenuItem value={portfolio}>
+                        {portfolio.name}
+                        <Chip
+                            onDelete={this.handleDelete}
+                            color="secondary"
+                        />                    
+                    </MenuItem>
         })
     }
 

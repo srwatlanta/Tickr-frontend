@@ -72,7 +72,7 @@ export default function UserBar(props) {
       </List>
       <Divider/>
       <List>
-        < ListItem button component="a" href="http://localhost:3001/profile">
+        < ListItem button onClick={props.removeSearch}>
             <ListItemIcon><ShowChartIcon/></ListItemIcon>
             <ListItemText primary='Profile' />
         </ListItem>   

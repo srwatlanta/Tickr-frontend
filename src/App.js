@@ -5,7 +5,6 @@ import LoginContainer from './containers/LoginContainer'
 import ProfileContainer from './containers/ProfileContainer'
 import StockShowContainer from './containers/StockShowContainer'
 import { Component } from 'react';
-import StockNews from './components/StockNews'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 
@@ -48,7 +47,7 @@ class App extends Component {
     .then(res => res.json())
     .then(user => this.setState({
       currentUser: user.user,
-      currentPortfolio: data.user.portfolios[0]
+      currentPortfolio: user.user.portfolios[0]
     }, localStorage.setItem("token", user.jwt)))
   }
 
@@ -60,12 +59,26 @@ class App extends Component {
       }
     })
     .then(res => res.json())
-    .then(data => {this.setState({
+    .then(data => {this.setState(prevState =>({
+      stockCardData: [],
+      stockGraphData: [],
       currentUser: data.user,
-      currentPortfolio: data.user.portfolios[0]
-    },
+      currentPortfolio: prevState.currentPortfolio ? prevState.currentPortfolio : data.user.portfolios[0]
+    }),
       () => this.state.currentUser ? this.filterStocks() : null
     )})
+  }
+
+  removeSearch = () => {
+    this.setState({
+      selectedStock: {
+        ticker: null,
+        todayPrice: null,
+        yesterdayPrice: null,
+        news: []
+      },
+      selectedStockInfo: null
+    })
   }
 
   logOut = () => {
@@ -77,7 +90,7 @@ class App extends Component {
         todayPrice: null,
         yesterdayPrice: null,
         news: []
-      }
+      },
     })
   }
 
@@ -125,7 +138,6 @@ class App extends Component {
     let objcopy = {...this.state.selectedStock}
     objcopy.todayPrice = price1
     objcopy.yesterdayPrice = price2
-    
     this.setState({selectedStock: objcopy
     })
   }
@@ -183,7 +195,6 @@ class App extends Component {
     obj.ticker = ticker
     obj.todayPrice = price1
     obj.yesterdayPrice = price2
-
     this.setState({
         stockCardData: [...this.state.stockCardData, obj]
     })
@@ -220,6 +231,10 @@ class App extends Component {
         portfolio_id: portfolio
       })
     })
+    .then(res => res.json())
+    .then(stock => this.setState({
+      portfolioStocks: [...this.state.portfolioStocks, stock.stock]
+    }),this.fetchProfile())
   }
 
   setCurrentPortfolio = (portfolio) => {
@@ -244,7 +259,6 @@ class App extends Component {
   //Add a new Portfolio
   addPortfolio = (name) => {
     let userID = this.state.currentUser.id
-    console.log(this.state.currentUser)
     fetch("http://localhost:3000/portfolios", {
       method:"POST",
       headers: {
@@ -257,16 +271,15 @@ class App extends Component {
         user_id: userID
       })
     })
+    .then(this.setState({portfolioStocks: []}))
+    .then(this.fetchProfile())
   }
 
-  handleAddPortfolio = (data) => {
-    this.addPortfolio(data)
-  }
 
   render() {
     return (
       <Router >
-        <NavBar user={this.state.currentUser} logOut={this.logOut} handleSearch={this.handleSearch}/>
+        <NavBar removeSearch={this.removeSearch} user={this.state.currentUser} logOut={this.logOut} handleSearch={this.handleSearch}/>
           {localStorage.getItem("token") ?
           <React.Fragment>
             {this.state.selectedStockInfo ?  
@@ -291,7 +304,7 @@ class App extends Component {
             stockGraphData={this.state.stockGraphData}
             topBusNews={this.state.topBusNews}
             portfolioOptions={this.state.currentUser.portfolios}
-            handleAddPortfolio={this.handleAddPortfolio}
+            handleAddPortfolio={this.addPortfolio}
           /> 
            } 
            } /> 
