@@ -26,8 +26,6 @@ class App extends Component {
         news: []
       },
       selectedStockInfo: null,
-      stockCardData: [],
-      stockGraphData: [],
       topBusNews: [],
       newPortfolio: null
     }
