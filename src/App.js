@@ -26,8 +26,6 @@ class App extends Component {
         news: []
       },
       selectedStockInfo: null,
-      stockCardData: [],
-      stockGraphData: [],
       topBusNews: [],
       newPortfolio: null
     }
@@ -125,8 +123,9 @@ class App extends Component {
         ticker: null,
         todayPrice: null,
         yesterdayPrice: null,
-        news: []
+        news: [],
       },
+      portfolioStocks: []
     })
   }
 
