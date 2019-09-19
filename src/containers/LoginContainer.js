@@ -17,7 +17,7 @@ function Copyright() {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
-        <Link color="inherit" href="http://localhost:3001/">
+        <Link color="inherit" href="https://tickr-stock.herokuapp.com/">
           Tickr
         </Link>{' '}
         {new Date().getFullYear()}
