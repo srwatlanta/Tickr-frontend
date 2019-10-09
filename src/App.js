@@ -89,7 +89,7 @@ class App extends Component {
 
   //Token Fetch when User Info Updates
   fetchProfile = () => {
-    fetch("https://tickr-stock-backend.herokuapp.com/", {
+    fetch("https://tickr-stock-backend.herokuapp.com/profile", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
