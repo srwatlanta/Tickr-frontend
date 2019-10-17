@@ -20,20 +20,21 @@ class StockNews extends Component {
     }
 
     renderNews = () => {
-        return this.props.news.map(story => {
+        return this.props.news ?
+        this.props.news.map(story => {
             return (
                 <this.ListItemLink href={story.url} target="_blank">
                     <ListItemText primary={story.title} secondary={story.description} />
                 </this.ListItemLink>
             )
-        })
+        }):
+        null
     }
 
     render() {
         // console.log(this.props)
         return (
             <Paper className={styles.header}>
-                
                 <Paper style={{maxHeight: 500, maxWidth:1700,  overflow: 'auto'}}>
                     <List>
                         {this.renderNews()}
