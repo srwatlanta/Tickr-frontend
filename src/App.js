@@ -8,8 +8,9 @@ import { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 
-const stockAPIKEY = '08G151DEIUICTJ2K'
-const newsAPIKEY = '85216af2d9e046409f238846c9947b25'
+// const stockAPIKEY = '08G151DEIUICTJ2K'
+const stockAPIKEY= 'XLWWWNITJQV4H0KC'
+const newsAPIKEY = '6557eb9f956d4f65a47b432e7145bfaa'
 
 
 class App extends Component {
