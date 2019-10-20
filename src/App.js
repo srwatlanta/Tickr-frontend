@@ -185,12 +185,17 @@ class App extends Component {
 
   //News API call and sets the Selected Stock with its news
   fetchNewsData = (query) => {
-    fetch('https://newsapi.org/v2/everything?q=' + query + '&from=2019-09-10&sortBy=publishedAt&language=en&apiKey=' + newsAPIKEY)
+    fetch('https://newsapi.org/v2/everything?q=' + query + '&from=' + this.getDate() +'&sortBy=publishedAt&language=en&apiKey=' + newsAPIKEY)
     .then(res => res.json())
     .then(news => this.setState(prevState => ({
       selectedStock: {...prevState.selectedStock, news: news.articles}
     }))
   )}
+
+  getDate = () => {
+    let d = new Date()
+    return `${d.getYear() + 1900}-${d.getMonth() + 1}-${d.getDate() + 1}`
+  }
 
   //Fetch Stock Data From API. Used for Search and multiple times for User Profile.
   fetchSearchStockData = (stock) => {

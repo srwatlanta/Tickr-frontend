@@ -8,6 +8,10 @@ import Typography from '@material-ui/core/Typography';
 const styles = {
     header:{
         backgroundColor: '#f2ab38'
+    },
+    div: {
+        marginTop: '2em',
+        marginBottom: '10em'
     }
 }
 
@@ -20,17 +24,21 @@ class StockNews extends Component {
     }
 
     renderNews = () => {
-        return this.props.news.map(story => {
+        return this.props.news ?
+        this.props.news.map(story => {
             return (
                 <this.ListItemLink href={story.url} target="_blank">
                     <ListItemText primary={story.title} secondary={story.description} />
                 </this.ListItemLink>
             )
         })
+        :
+        <div styles={styles.div}>
+            <h3>No news can be fetched at this time</h3>
+        </div>
     }
 
     render() {
-        // console.log(this.props)
         return (
             <Paper className={styles.header}>
                 

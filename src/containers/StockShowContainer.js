@@ -37,6 +37,7 @@ class StockShowContainer extends Component {
     }
 
     render() {
+        console.log(this.props)
         return (
             <div style={styles.bar}>
                 <Grid container spacing={2}>
