@@ -41,7 +41,6 @@ class StockNews extends Component {
     render() {
         return (
             <Paper className={styles.header}>
-                
                 <Paper style={{maxHeight: 500, maxWidth:1700,  overflow: 'auto'}}>
                     <List>
                         {this.renderNews()}

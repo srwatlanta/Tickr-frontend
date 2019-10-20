@@ -13,8 +13,8 @@ class LoginForm extends Component {
     constructor(){
         super()
         this.state = {
-            username: '',
-            password: ''
+            username: 'test',
+            password: 'test'
         }
     }
 

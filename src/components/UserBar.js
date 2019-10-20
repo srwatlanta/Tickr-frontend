@@ -50,7 +50,7 @@ export default function UserBar(props) {
   };
 
   const deleteAccount = (id) =>{
-    fetch(`http://localhost:3000/users/${id}`, {
+    fetch(`https://tickr-stock-backend.herokuapp.com/users/${id}`, {
       method: 'DELETE',
       headers: {
         Authorization :`Bearer ${localStorage.getItem("token")}`,

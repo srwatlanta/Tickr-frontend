@@ -19,13 +19,8 @@ export default function SimpleSnackbar() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const sayings = [
-  "fuck you.", 
-  "Should've thought about that before you created an account, huh? Idiot.",
-  "Hey idiot, its probably the same one you use for everything.",
-  "Use a password manager like a grown up.",
-  "It's called LastPass, its 2019. Come on.",
-  "You insult my intelligence by asking me this.",
-  "Wah wah little baby forgot their password."
+  "that's a bummer, man",
+  "try username: test, password: test"
     ]
 
   const selectSaying = () =>{
